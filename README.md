@@ -1,1 +1,1 @@
-# board
+# Interactive Board
