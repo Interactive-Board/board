@@ -1,0 +1,22 @@
+{
+  "name": "interactive-board",
+  "version": "1.0.0",
+  "description": "Interactive board",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "handlebars": "^4.0.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Interactive-Board/board.git"
+  },
+  "keywords": [
+    "interactive",
+    "board"
+  ]
+}
