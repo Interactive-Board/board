@@ -1,0 +1,105 @@
+:root {
+	--slide-transition-duration: 750ms;
+}
+
+#slide-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	transition: background var(--slide-transition-duration);
+}
+
+.slide {
+	position: fixed;
+	top: 0;
+/*	left: 0;*/
+	width: 100vw;
+	height: 100vh;
+	padding: 40px;
+	transition: left var(--slide-transition-duration);
+	box-sizing: border-box;
+}
+
+.slide h1,
+.slide h2,
+.slide .description {
+	margin: 0;
+	font-family: "Roboto";
+	font-weight: 300;
+}
+
+.slide.black h1,
+.slide.black h2,
+.slide.black .description {
+	color: #000;
+}
+
+.slide.black h2 {
+	opacity: 0.7;
+}
+
+.slide.white h1,
+.slide.white h2,
+.slide.white .description {
+	color: #FFF;
+}
+
+.slide.white h2 {
+	opacity: 0.7;
+}
+
+.slide h1 {
+	/*font-family: "Nunito";*/
+	font-family: "Roboto";
+	font-size: 144px;
+	font-size: 13vh;
+	line-height: 13vh;
+}
+
+.slide h2 {
+	margin-top: 10px;
+	font-size: 120px;
+	font-size: 8vh;
+	line-height: 8vh;
+	color: #444;
+}
+
+.slide .description {
+	position: absolute;
+	right: 25px;
+	bottom: 40px;
+	max-width: 65vw;
+	font-size: 48px;
+	font-size: 4vh;
+}
+
+#touch {
+	position: absolute;
+	bottom: 40px;
+	left: 25px;
+	font-family: "Roboto";
+	font-size: 4vh;
+	font-weight: 300;
+	transition: color var(--slide-transition-duration);
+	animation: 800ms infinite ease-in-out alternate flash;
+}
+
+#touch.black {
+	color: #000;
+}
+
+#touch.white {
+	color: #FFF;
+}
+
+@keyframes flash {
+	from {
+		opacity: 1; 
+	}
+
+	to {
+		opacity: 0.5;
+	}
+}
