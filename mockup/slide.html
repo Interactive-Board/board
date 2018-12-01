@@ -118,6 +118,8 @@
 						previousSlide.style.left = "-100vw";
 						slideElement.style.left = "0";
 						slideContainer.style.background = `#${slide.color}`;
+						// Reset the timer
+						timer.className = "reset";
 					}, 100);
 					
 					let transitionListener;
@@ -125,12 +127,17 @@
 						slideContainer.removeChild(previousSlide);
 						previousSlide.removeEventListener("transitionend", transitionListener);
 						
+						// Start the timer
 						timer.className = "start";
 					}
 					previousSlide.addEventListener("transitionend", transitionListener);
 				}
 				
-				timer.addEventListener("animationend", () => {
+				timer.addEventListener("animationend", (event) => {
+					if (event.animationName != "timer-run") {
+						return;
+					}
+					
 					slide++;
 					
 					if (slide >= slides.length) {
