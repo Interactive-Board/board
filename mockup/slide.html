@@ -45,37 +45,7 @@
 				}
 			];
 			
-			function getLuminance(r8, g8, b8) {
-				// https://ux.stackexchange.com/questions/82056/how-to-measure-the-contrast-between-any-given-color-and-white
-				// https://ux.stackexchange.com/questions/107318/formula-for-color-contrast-between-text-and-background
-				// https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
-				let rs = r8 / 255;
-				let gs = g8 / 255;
-				let bs = b8 / 255;
-				let r, g, b;
-				
-				if (rs <= 0.03928) {
-					r = rs / 12.92;
-				} else {
-					r = Math.pow((rs + 0.055) / 1.055, 2.4);
-				}
-				
-				if (gs <= 0.03928) {
-					g = gs / 12.92;
-				} else {
-					g = Math.pow((gs + 0.055) / 1.055, 2.4);
-				}
-				
-				if (bs <= 0.03928) {
-					b = bs / 12.92;
-				} else {
-					b = Math.pow((bs + 0.055) / 1.055, 2.4);
-				}
-				
-				return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-			}
-			
-			function hexToRGB(hexColor) {
+			function hexToColor(hexColor) {
 				let parts = /^([\dA-Fa-f]{2})([\dA-Fa-f]{2})([\dA-Fa-f]{2})$/.exec(hexColor);
 				
 				return parts ? {
@@ -85,30 +55,39 @@
 				} : undefined;
 			}
 			
+			function getLuminanceForValue(value) {
+				// https://ux.stackexchange.com/questions/82056/how-to-measure-the-contrast-between-any-given-color-and-white
+				// https://ux.stackexchange.com/questions/107318/formula-for-color-contrast-between-text-and-background
+				// https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+				value = value / 255;
+				
+				return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4)
+			}
+			
+			function getLuminanceForColor(color) {
+				return 0.2126 * getLuminanceForValue(color.r) + 0.7152 * getLuminanceForValue(color.g) + 0.0722 * getLuminanceForValue(color.b);
+			}
+			
+			function getContrast(color1, color2) {
+				let color1Luminance = getLuminanceForColor(color1);
+				let color2Luminance = getLuminanceForColor(color2);
+				
+				return color1Luminance < color2Luminance ? (color2Luminance + 0.05) / (color1Luminance + 0.05) : (color1Luminance + 0.05) / (color2Luminance + 0.05);
+			}
+			
 			document.addEventListener("DOMContentLoaded", () => {
 				let slideContainer = document.getElementById("slide-container");
 				let timer = document.getElementById("timer");
 				let slide = 0;
-				let blackLuminance = getLuminance(0, 0, 0);
-				let whiteLuminance = getLuminance(255, 255, 255);
+				let blackColor = {r: 0, g: 0, b: 0};
+				let whiteColor = {r: 255, g: 255, b: 255};
 				
 				function change(slide) {
-					let backgroundColor = hexToRGB(slide.color);
-					let backgroundLuminance = getLuminance(backgroundColor.r, backgroundColor.g, backgroundColor.b);
-					let blackContrast;
-					let whiteContrast;
+					let backgroundColor = hexToColor(slide.color);
 					let foregroundColor = "white";
 					
-					if (backgroundLuminance < blackLuminance) {
-						blackContrast = (blackLuminance + 0.05) / (backgroundLuminance + 0.05);
-					} else {
-						blackContrast = (backgroundLuminance + 0.05) / (blackLuminance + 0.05);
-					}
-					if (backgroundLuminance < whiteLuminance) {
-						whiteContrast = (whiteLuminance + 0.05) / (backgroundLuminance + 0.05);
-					} else {
-						whiteContrast = (backgroundLuminance + 0.05) / (whiteLuminance + 0.05);
-					}
+					let blackContrast = getContrast(backgroundColor, blackColor);
+					let whiteContrast = getContrast(backgroundColor, whiteColor);
 					
 					if (blackContrast > whiteContrast) {
 						foregroundColor = "black";
