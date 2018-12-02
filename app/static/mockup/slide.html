@@ -66,12 +66,18 @@
 					h1.innerText = slide.title;
 					let h2 = document.createElement("h2");
 					h2.innerText = slide.subheading;
+					let code = document.createElement("img");
+					code.className = "qrcode";
+					if (slide.qrcode) {
+						code.src = slide.qrcode;
+					}
 					let description = document.createElement("div");
 					description.className = "description";
 					description.innerText = slide.description;
 					
 					slideElement.appendChild(h1);
 					slideElement.appendChild(h2);
+					slideElement.appendChild(code);
 					slideElement.appendChild(description);
 					slideContainer.appendChild(slideElement);
 					
@@ -114,7 +120,7 @@
 				});
 				
 				_.getJSON("/api/news").then((data) => {
-					slides = data;
+					slides = data.data;
 					
 					// Start the timer
 					timer.className = "start";

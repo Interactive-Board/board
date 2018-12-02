@@ -102,12 +102,16 @@
 					h1.innerText = slide.title;
 					let h2 = document.createElement("h2");
 					h2.innerText = slide.subtitle;
+					let code = document.createElement("img");
+					code.className = "qrcode";
+					code.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAklEQVR4AewaftIAAAJ3SURBVO3BUaojUQxDwSPT+9+y5jci4MelO4kHXCXAfJdIJomeSaJnkkgmiWS+qFijFGuUYo1y8U48y9xj7hHPEs8yL4o1SrFGKdYoF38zZ8Q9JolkeiaJZJK4x5wRjWKNUqxRijXKxe+JZJJJIpkzIpkkfqhYoxRrlGKNcvF7JokzomeSGKxYoxRrlGKNcvE38VkimSSSSSKZJD5LPKhYoxRrlGKNcvHOfJdJIpkkkkkimSTuMR9UrFGKNUqxRhH/P9MTPZPEDxVrlGKNUqxRBJgkeua3xBmTRDI90TNJJHOgWKMUa5RijSLemSSeZZLomZ5I5oxIJolkniVeFGuUYo1SrFEEmCTOmDOiZ5JI5oxIpieS6YlkkuiZF8UapVijFGuUi3cmiWSSOGOeJXqmJ3oimTPmQLFGKdYoxRpFgEnijEkimZ64xyTRM/eIZ5kXxRqlWKMUaxQBpieSOSOSOSPuMWfEGZNEzyTxolijFGuUYo0iwPTEPWY2kUwSPfOgYo1SrFGKNcrFO5HMPaJnkuiZJM6YnuiZnkgmiWReFGuUYo1SrFEuPs+cMT1xxiSRzHeZJF4Ua5RijVKsUcTvmc8SPZPEGZNEzyTxolijFGuUYo1yAea7xLPEZ5kkeiaJJJJ5UaxRijVKsUa5eCeeZc6IZJJIJolk7hFnRM80ijVKsUYp1igXfzNnxG+Ze8w9JokDxRqlWKMUa5SL/5/omZ5I5oxI5oZijVKsUYo1ysXviWTOmCR6IpmeSCaZJJI5UKxRijVKsUa5+Jv4LdET94ie+aJijVKsUYo1igDzXSKZM6JneiKZJO4xSfTMi2KNUqxRijXKP7uNd9c6SKN4AAAAAElFTkSuQmCC";
 					let description = document.createElement("div");
 					description.className = "description";
 					description.innerText = slide.description;
 					
 					slideElement.appendChild(h1);
 					slideElement.appendChild(h2);
+					slideElement.appendChild(code);
 					slideElement.appendChild(description);
 					slideContainer.appendChild(slideElement);
 					
@@ -162,6 +166,7 @@
 				<div class="slide" style="left: 0;">
 					<h1>Placeholder Content</h1>
 					<h2>00/00/00</h2>
+					<img class="qrcode" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAklEQVR4AewaftIAAAJ3SURBVO3BUaojUQxDwSPT+9+y5jci4MelO4kHXCXAfJdIJomeSaJnkkgmiWS+qFijFGuUYo1y8U48y9xj7hHPEs8yL4o1SrFGKdYoF38zZ8Q9JolkeiaJZJK4x5wRjWKNUqxRijXKxe+JZJJJIpkzIpkkfqhYoxRrlGKNcvF7JokzomeSGKxYoxRrlGKNcvE38VkimSSSSSKZJD5LPKhYoxRrlGKNcvHOfJdJIpkkkkkimSTuMR9UrFGKNUqxRhH/P9MTPZPEDxVrlGKNUqxRBJgkeua3xBmTRDI90TNJJHOgWKMUa5RijSLemSSeZZLomZ5I5oxIJolkniVeFGuUYo1SrFEEmCTOmDOiZ5JI5oxIpieS6YlkkuiZF8UapVijFGuUi3cmiWSSOGOeJXqmJ3oimTPmQLFGKdYoxRpFgEnijEkimZ64xyTRM/eIZ5kXxRqlWKMUaxQBpieSOSOSOSPuMWfEGZNEzyTxolijFGuUYo0iwPTEPWY2kUwSPfOgYo1SrFGKNcrFO5HMPaJnkuiZJM6YnuiZnkgmiWReFGuUYo1SrFEuPs+cMT1xxiSRzHeZJF4Ua5RijVKsUcTvmc8SPZPEGZNEzyTxolijFGuUYo1yAea7xLPEZ5kkeiaJJJJ5UaxRijVKsUa5eCeeZc6IZJJIJolk7hFnRM80ijVKsUYp1igXfzNnxG+Ze8w9JokDxRqlWKMUa5SL/5/omZ5I5oxI5oZijVKsUYo1ysXviWTOmCR6IpmeSCaZJJI5UKxRijVKsUa5+Jv4LdET94ie+aJijVKsUYo1igDzXSKZM6JneiKZJO4xSfTMi2KNUqxRijXKP7uNd9c6SKN4AAAAAElFTkSuQmCC">
 					<div class="description">Placeholder Content</div>
 				</div>
 			</div>

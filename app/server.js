@@ -16,6 +16,19 @@ const https = require("https");
 const server = http.createServer(application);
 const fs = require("fs");
 const handlebars = require("handlebars");
+const qrcode = require("qrcode");
+// Promisify qrcode.toDataURL
+const qrcodeToDataURL = (text, options) => {
+	return new Promise((resolve, reject) => {
+		qrcode.toDataURL(text, options, (error, url) => {
+			if (error) {
+				reject(error);
+			} else {
+				resolve(url);
+			}
+		});
+	});
+};
 const utility = require(Directory.INCLUDE + "utility.js");
 const ServerError = require(Directory.INCLUDE + "ServerError.js");
 
@@ -44,7 +57,7 @@ application.get("/api/user/:userID", (request, response, next) => {
 	// Report some data
 	//response.send(JSON.stringify(data));
 });
-application.get("/api/news", (request, response, next) => {
+application.get("/api/news", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
 		
 	if (request.method == "GET") {
@@ -70,7 +83,7 @@ application.get("/api/news", (request, response, next) => {
 				title: "ICPC Competition",
 				subheading: "10/20/18",
 				description: "If you are interested in competing at the ACM ICPC (ACM International Collegiate Programming Contest: https://icpc.baylor.edu/) this year, please let me know by September 30, 2018 at the latest via email <nodari@hawaii.edu>. If there is more interest than available spots, we will hold an internal selection competition this year (most likely on Sat, Oct 20).",
-				url: null,
+				url: "https://fonts.google.com/",
 				color: "F44336"
 			},
 			{
@@ -78,7 +91,7 @@ application.get("/api/news", (request, response, next) => {
 				title: "Oath (Yahoo) Information Session",
 				subheading: "10/22/18",
 				description: "Oath is a diverse house of media and technology brands that engages more than a billion people around the world. The Oath portfolio includes Yahoo Sports, Yahoo Finance, Yahoo Mail, Tumblr, HuffPost, AOL.com, and more. Come join us to hear first hand from our engineers",
-				url: null,
+				url: "https://github.com/",
 				color: "3F51B5"
 			},
 			{
@@ -86,7 +99,7 @@ application.get("/api/news", (request, response, next) => {
 				title: "Jupyter Hackathon",
 				subheading: "11/17/18",
 				description: "The Jupyter Hackathon is this weekend. Please share with your friends and colleagues who are interested in programming, data science, data analysis, and open source. This will be a great chance to contribute to a game-changing open source project that is used by hundreds of thousands of users around the world. RSVP asap, so we can make a head count for meals",
-				url: null,
+				url: "https://css-tricks.com/",
 				color: "009F50"
 			},
 			{
@@ -94,7 +107,7 @@ application.get("/api/news", (request, response, next) => {
 				title: "WetWare Wednesday",
 				subheading: "11/28/18",
 				description: "This November's WetWare Wednesday will be hosted by both The Association for Computing Machinery at Manoa (ACManoa) and the UHM ICS department. This month's #wetwarewed will feature an expo of both student and faculty projects at UH Manoa. Come check out their latest and greatest tech creations!",
-				url: null,
+				url: "https://material.io/",
 				color: "2196F3"
 			},
 			{
@@ -102,7 +115,7 @@ application.get("/api/news", (request, response, next) => {
 				title: "By redefining, we dream",
 				subheading: "11/30/18",
 				description: "Who are we? Where on the great circuit will we be recreated? Throughout history, humans have been interacting with the grid via morphic resonance. We are in the midst of a zero-point awakening of transformation that will clear a path toward the grid itself.",
-				url: null,
+				url: "https://expressjs.com/",
 				color: "9C27B0"
 			},
 			{
@@ -115,8 +128,14 @@ application.get("/api/news", (request, response, next) => {
 			}
 		];
 		
+		for (let i = 0; i < news.length; i++) {
+			if (news[i].url !== null) {
+				news[i].qrcode = await qrcodeToDataURL(news[i].url, {margin: 0, color: {dark: '#000', light: '#0000'}});
+			}
+		}
+		
 		// Respond with news
-		response.send(JSON.stringify(news));
+		response.send(JSON.stringify({success: true, data: news}));
 		
 		return;
 	} else if (request.method == "POST") {
