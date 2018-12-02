@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Slide</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300|Nunito:300" rel="stylesheet">
+		<link rel="stylesheet" href="/style/slide.css">
+		<script src="/script/lib.js"></script>
+		<script>
+			let slides = [];
+			
+			function hexToColor(hexColor) {
+				let parts = /^([\dA-Fa-f]{2})([\dA-Fa-f]{2})([\dA-Fa-f]{2})$/.exec(hexColor);
+				
+				return parts ? {
+					r: parseInt(parts[1], 16),
+					g: parseInt(parts[2], 16),
+					b: parseInt(parts[3], 16)
+				} : undefined;
+			}
+			
+			function getLuminanceForValue(value) {
+				// https://ux.stackexchange.com/questions/82056/how-to-measure-the-contrast-between-any-given-color-and-white
+				// https://ux.stackexchange.com/questions/107318/formula-for-color-contrast-between-text-and-background
+				// https://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+				value = value / 255;
+				
+				return value <= 0.03928 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4)
+			}
+			
+			function getLuminanceForColor(color) {
+				return 0.2126 * getLuminanceForValue(color.r) + 0.7152 * getLuminanceForValue(color.g) + 0.0722 * getLuminanceForValue(color.b);
+			}
+			
+			function getContrast(color1, color2) {
+				let color1Luminance = getLuminanceForColor(color1);
+				let color2Luminance = getLuminanceForColor(color2);
+				
+				return color1Luminance < color2Luminance ? (color2Luminance + 0.05) / (color1Luminance + 0.05) : (color1Luminance + 0.05) / (color2Luminance + 0.05);
+			}
+			
+			document.addEventListener("DOMContentLoaded", () => {
+				let slideContainer = document.getElementById("slide-container");
+				let timer = document.getElementById("timer");
+				let slide = 0;
+				let blackColor = {r: 0, g: 0, b: 0};
+				let whiteColor = {r: 255, g: 255, b: 255};
+				
+				function change(slide) {
+					console.log(slide);
+					let backgroundColor = hexToColor(slide.color);
+					let foregroundColor = "white";
+					
+					let blackContrast = getContrast(backgroundColor, blackColor);
+					let whiteContrast = getContrast(backgroundColor, whiteColor);
+					
+					if (blackContrast > whiteContrast) {
+						foregroundColor = "black";
+					}
+					
+					console.log(blackContrast, whiteContrast);
+					
+					let slideElement = document.createElement("div");
+					slideElement.className = `slide ${foregroundColor}`;
+					slideElement.style.left = "100vw";
+					let h1 = document.createElement("h1");
+					h1.innerText = slide.title;
+					let h2 = document.createElement("h2");
+					h2.innerText = slide.subheading;
+					let description = document.createElement("div");
+					description.className = "description";
+					description.innerText = slide.description;
+					
+					slideElement.appendChild(h1);
+					slideElement.appendChild(h2);
+					slideElement.appendChild(description);
+					slideContainer.appendChild(slideElement);
+					
+					let previousSlide = slideContainer.children[0];
+					
+					setTimeout(() => {
+						document.getElementById("idle-slides").className = foregroundColor;
+						previousSlide.style.left = "-100vw";
+						slideElement.style.left = "0";
+						slideContainer.style.background = `#${slide.color}`;
+						// Reset the timer
+						timer.className = "reset";
+					}, 100);
+					
+					let transitionListener;
+					transitionListener = () => {
+						slideContainer.removeChild(previousSlide);
+						previousSlide.removeEventListener("transitionend", transitionListener);
+						
+						// Start the timer
+						timer.className = "start";
+					}
+					previousSlide.addEventListener("transitionend", transitionListener);
+				}
+				
+				timer.addEventListener("animationend", (event) => {
+					if (event.animationName != "timer-run") {
+						return;
+					}
+					
+					slide++;
+					
+					if (slide >= slides.length) {
+						slide = 0;
+					}
+					
+					timer.className = "";
+					
+					change(slides[slide]);
+				});
+				
+				_.getJSON("/api/news").then((data) => {
+					slides = data;
+					
+					// Start the timer
+					timer.className = "start";
+					
+					change(slides[slide]);
+				}).catch((error) => {
+					console.log(error);
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="idle-slides" class="black">
+			<div id="slide-container" style="background: #ffc107;">
+				<div class="slide" style="left: 0;">
+					<h1>Placeholder Content</h1>
+					<h2>00/00/00</h2>
+					<div class="description">Placeholder Content</div>
+				</div>
+			</div>
+			<div id="touch">Tap to interact</div>
+			<div id="timer"></div>
+		</div>
+	</body>
+</html>

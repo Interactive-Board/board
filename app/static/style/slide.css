@@ -1,0 +1,167 @@
+:root {
+	--slide-transition-duration: 750ms;
+	--slide-duration: 8s;
+}
+
+#slide-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	transition: background var(--slide-transition-duration);
+}
+
+.slide {
+	position: fixed;
+	top: 0;
+/*	left: 0;*/
+	width: 100vw;
+	height: 100vh;
+	padding: 40px;
+	transition: left var(--slide-transition-duration);
+	box-sizing: border-box;
+}
+
+.slide h1,
+.slide h2,
+.slide .description {
+	margin: 0;
+	font-family: "Roboto";
+	font-weight: 300;
+}
+
+.slide.black h1,
+.slide.black h2,
+.slide.black .description {
+	color: #000;
+}
+
+.slide.black h2 {
+	opacity: 0.7;
+}
+
+.slide.white h1,
+.slide.white h2,
+.slide.white .description {
+	color: #FFF;
+}
+
+.slide.white h2 {
+	opacity: 0.7;
+}
+
+.slide h1 {
+	/*font-family: "Nunito";*/
+	font-family: "Roboto";
+	font-size: 144px;
+	font-size: 13vh;
+	line-height: 13vh;
+}
+
+.slide h2 {
+	margin-top: 10px;
+	font-size: 120px;
+	font-size: 8vh;
+	line-height: 8vh;
+	color: #444;
+}
+
+.slide .description {
+	position: absolute;
+	right: 25px;
+	bottom: 40px;
+	max-width: 65vw;
+	font-size: 48px;
+	font-size: 4vh;
+}
+
+#touch {
+	position: absolute;
+	bottom: 40px;
+	left: 25px;
+	font-family: "Roboto";
+	font-size: 4vh;
+	font-weight: 300;
+	transition: color var(--slide-transition-duration);
+	animation: 800ms infinite ease-in-out alternate flash;
+}
+
+#idle-slides.black #touch {
+	color: #000;
+}
+
+#idle-slides.white #touch {
+	color: #FFF;
+}
+
+#timer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 1.25vh;
+	transition: background var(--slide-transition-duration);
+	--filled-opacity: 0.75;
+}
+
+#timer::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0.25;
+	transition: background var(--slide-transition-duration);
+}
+
+#timer.reset::before {
+	animation: var(--slide-transition-duration) 1 linear normal timer-reset;
+}
+
+#timer.start::after {
+	content: "";
+	position: absolute;
+	height: 100%;
+	opacity: var(--filled-opacity);
+	animation: var(--slide-duration) 1 linear normal timer-run;
+}
+
+#idle-slides.white #timer::before,
+#idle-slides.white #timer::after {
+	background: #FFF;
+}
+
+#idle-slides.black #timer::before,
+#idle-slides.black #timer::after {
+	background: #000;
+}
+
+@keyframes flash {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0.25;
+	}
+}
+
+@keyframes timer-run {
+	from {
+		width: 100%;
+	}
+	
+	to {
+		width: 0;
+	}
+}
+
+@keyframes timer-reset {
+	from {
+		opacity: 0.5;
+	}
+	
+	to {
+		opacity: var(--filled-opacity);
+	}
+}
