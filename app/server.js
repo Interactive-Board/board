@@ -51,6 +51,20 @@ application.get("/", (request, response) => {
 application.get("/api/user/:userID", (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
 	
+	/*
+	if (check if request is malformed) {
+		let error = new Error("400 Bad Request");
+		error.status = 400;
+		error._method = request.method;
+		error._originalPath = request.path;
+		
+		// Trigger the error handler chain
+		next(error);
+		
+		return;
+	}
+	*/
+	
 	// Get data on specified user
 	//let data = getSomeData(request.params.userID);
 	
@@ -62,20 +76,6 @@ application.get("/api/news", async (request, response, next) => {
 		
 	if (request.method == "GET") {
 		// Get list of news
-		
-		/*
-		if (check if request is malformed) {
-			let error = new Error("400 Bad Request");
-			error.status = 400;
-			error._method = request.method;
-			error._originalPath = request.path;
-
-			// Trigger the error handler chain
-			next(error);
-			
-			return;
-		}
-		*/
 
 		let news = [
 			{
@@ -264,7 +264,7 @@ application.use((mainError, request, response, next) => {
 	// Internal Server Error
 	let errorType = mainError.status in ServerError ? ServerError[mainError.status] : ServerError[500];
 	
-	// Return a return the correct status code header
+	// Return the correct status code header
 	response.status(errorType.code);
 	
 	let errorID;
