@@ -8,7 +8,7 @@ class News extends HTMLElement {
 
     // Create elements
     let wrapper = document.createElement("div");
-
+    wrapper.className = "wrapper";
     let title = document.createElement("h2");
     title.className = "item";
     title.innerText = "ACI - 1st Meeting";
@@ -38,28 +38,53 @@ class News extends HTMLElement {
 
     let style = document.createElement("style");
     style.textContent = `
+.wrapper {
+	padding: 5px 25px;
+}
+
 h2, h3 {
-  margin: 0px;
+	margin: 0px;
 }
 
 p {
-  margin-top: 5px;
+	margin-top: 5px;
 }
 
-.button {
-  background-color: #2196F3;
-  border: none;
-  color: white;
-  padding: 5px 15px;
-  border-radius: 3px;
-  text-align: center;
+button {
+  min-width: 64px;
+  height: 36px;
+  margin: 0 5px;
+  padding: 0 16px;
+  border: 1px solid #DADCE0;
+  border-radius: 4px;
+  outline: none;
+  background: #FFF;
+  font-family: "Roboto", Helvetica, "Times New Roman", sans-serif;
+  font-display: swap;
   font-size: 14px;
   font-weight: bold;
+  line-height: 36px;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  transition: border-color 50ms, background 50ms, box-shadow 250ms;
   cursor: pointer;
 }
 
-.button:hover {
-  background-color: deepskyblue;
+button:first-child {
+  margin-left: 0;
+}
+
+button:last-child {
+  margin-right: 0;
+}
+
+button:hover {
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.08), 0 1px 10px 0 rgba(0,0,0,.12);
+}
+
+button:focus {
+  border-color: #2196F3;
+  opacity: 0.78;
 }
 `;
 
