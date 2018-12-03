@@ -130,7 +130,7 @@ application.get("/api/news", async (request, response, next) => {
 		
 		for (let i = 0; i < news.length; i++) {
 			if (news[i].url !== null) {
-				news[i].qrcode = await qrcodeToDataURL(news[i].url, {margin: 0, color: {dark: '#000', light: '#0000'}});
+				news[i].qrcode = await qrcodeToDataURL(news[i].url, {margin: 0, scale: 1, color: {dark: '#000', light: '#0000'}});
 			}
 		}
 		

@@ -3,6 +3,10 @@
 	--slide-duration: 8s;
 }
 
+body {
+	overflow: hidden;
+}
+
 #slide-container {
 	position: fixed;
 	top: 0;
@@ -69,20 +73,23 @@
 
 .slide .description {
 	position: absolute;
-	right: 25px;
+	right: 40px;
 	bottom: 40px;
 	max-width: 65vw;
 	font-size: 48px;
 	font-size: 4vh;
+	text-align: justify;
+	text-align-last: right;
 }
 
 .slide .qrcode {
+	width: 20vh;
+	height: 20vh;
 	margin-top: 15px;
-/*
-	position: absolute;
-	bottom: 25px;
-	left: 25px;
-*/
+	padding: 12px;
+	border-radius: 4px;
+	background: #FFF;
+	image-rendering: pixelated;
 }
 
 #touch {
@@ -102,6 +109,28 @@
 
 #idle-slides.white #touch {
 	color: #FFF;
+}
+
+#touch::after {
+	--min-size: 0vmax;
+	--min-border: 0vmax;
+    --max-size: 10vmax;
+	--max-border: 0.8vmax;
+	
+	content: "";
+    position: absolute;
+    border-radius: 100%;
+    border: 1px solid;
+    transition: border-color var(--slide-transition-duration);
+	animation: 1.6s infinite ease normal tap;
+}
+
+#idle-slides.black #touch::after {
+	border-color: #000;
+}
+
+#idle-slides.white #touch::after {
+	border-color: #FFF;
 }
 
 #timer {
@@ -145,6 +174,26 @@
 	background: #000;
 }
 
+@keyframes tap {
+	from {
+		bottom: calc(50% - calc(var(--min-size) / 2) - var(--min-border));
+		left: calc(50% - calc(var(--min-size) / 2) - var(--min-border));
+		height: var(--min-size);
+		width: var(--min-size);
+		border-width: var(--min-border);
+		opacity: 1;
+	}
+	
+	to {
+		bottom: calc(50% - calc(var(--max-size) / 2) - var(--max-border));
+		left: calc(50% - calc(var(--max-size) / 2) - var(--max-border));
+		height: var(--max-size);
+		width: var(--max-size);
+		border-width: var(--max-border);
+		opacity: 0;
+	}
+}
+
 @keyframes flash {
 	from {
 		opacity: 1;
@@ -167,7 +216,7 @@
 
 @keyframes timer-reset {
 	from {
-		opacity: 0.5;
+		opacity: 0.25;
 	}
 	
 	to {

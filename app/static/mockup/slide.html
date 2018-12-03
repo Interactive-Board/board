@@ -29,6 +29,8 @@
 			
 			function getLuminanceForColor(color) {
 				return 0.2126 * getLuminanceForValue(color.r) + 0.7152 * getLuminanceForValue(color.g) + 0.0722 * getLuminanceForValue(color.b);
+				// Tweak values for certain colors
+				// return 0.2126 * getLuminanceForValue(color.r) + 0.3152 * getLuminanceForValue(color.g) + 0.0222 * getLuminanceForValue(color.b);
 			}
 			
 			function getContrast(color1, color2) {
@@ -46,7 +48,6 @@
 				let whiteColor = {r: 255, g: 255, b: 255};
 				
 				function change(slide) {
-					console.log(slide);
 					let backgroundColor = hexToColor(slide.color);
 					let foregroundColor = "white";
 					
@@ -66,9 +67,10 @@
 					h1.innerText = slide.title;
 					let h2 = document.createElement("h2");
 					h2.innerText = slide.subheading;
-					let code = document.createElement("img");
-					code.className = "qrcode";
+					let code = null;
 					if (slide.qrcode) {
+						code = document.createElement("img");
+						code.className = "qrcode";
 						code.src = slide.qrcode;
 					}
 					let description = document.createElement("div");
@@ -77,7 +79,9 @@
 					
 					slideElement.appendChild(h1);
 					slideElement.appendChild(h2);
-					slideElement.appendChild(code);
+					if (code) {
+						slideElement.appendChild(code);
+					}
 					slideElement.appendChild(description);
 					slideContainer.appendChild(slideElement);
 					
@@ -141,7 +145,7 @@
 					<div class="description">Placeholder Content</div>
 				</div>
 			</div>
-			<div id="touch">Tap to interact</div>
+			<div id="touch">Touch screen</div>
 			<div id="timer"></div>
 		</div>
 	</body>
