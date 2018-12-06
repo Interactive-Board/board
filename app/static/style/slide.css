@@ -114,15 +114,15 @@ body {
 #touch::after {
 	--min-size: 0vmax;
 	--min-border: 0vmax;
-    --max-size: 10vmax;
-	--max-border: 0.8vmax;
+	--max-size: 10vmax;
+	--max-border: 0.25vmax;
 	
 	content: "";
-    position: absolute;
-    border-radius: 100%;
-    border: 1px solid;
-    transition: border-color var(--slide-transition-duration);
-	animation: 1.6s infinite ease normal tap;
+	position: absolute;
+	border-radius: 100%;
+	border: 1px solid;
+	transition: border-color var(--slide-transition-duration);
+	animation: 3.2s infinite ease normal tap ;
 }
 
 #idle-slides.black #touch::after {
@@ -176,20 +176,29 @@ body {
 
 @keyframes tap {
 	from {
-		bottom: calc(50% - calc(var(--min-size) / 2) - var(--min-border));
-		left: calc(50% - calc(var(--min-size) / 2) - var(--min-border));
+		bottom: calc(50% - calc(var(--min-size) / 2) - var(--max-border));
+		left: calc(50% - calc(var(--min-size) / 2) - var(--max-border));
 		height: var(--min-size);
 		width: var(--min-size);
-		border-width: var(--min-border);
+		border-width: var(--max-border);
 		opacity: 1;
 	}
 	
-	to {
-		bottom: calc(50% - calc(var(--max-size) / 2) - var(--max-border));
-		left: calc(50% - calc(var(--max-size) / 2) - var(--max-border));
+	50% {
+		bottom: calc(50% - calc(var(--max-size) / 2) - var(--min-border));
+		left: calc(50% - calc(var(--max-size) / 2) - var(--min-border));
 		height: var(--max-size);
 		width: var(--max-size);
-		border-width: var(--max-border);
+		border-width: var(--min-border);
+		opacity: 0;
+	}
+	
+	to {
+		bottom: calc(50% - calc(var(--max-size) / 2) - var(--min-border));
+		left: calc(50% - calc(var(--max-size) / 2) - var(--min-border));
+		height: var(--max-size);
+		width: var(--max-size);
+		border-width: var(--min-border);
 		opacity: 0;
 	}
 }
