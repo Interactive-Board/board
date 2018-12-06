@@ -27,33 +27,33 @@ h1 {
 
 .menu {
 	overflow-x: scroll;
-/*				overflow-x: overlay;*/
+/*	overflow-x: overlay;*/
 }
 
 .menu::-webkit-scrollbar {
 	height: var(--scrollbar-size);
-/*				background: #F0F0F0;*/
+/*	background: #F0F0F0;*/
 }
 
 .menu::-webkit-scrollbar-thumb {
-/*				border: 2px solid rgba(255,0,1,0.5);*/
-/*				box-shadow: inset 0 0 0 10px #C0C0C0;*/
+/*	border: 2px solid rgba(255,0,1,0.5);*/
+/*	box-shadow: inset 0 0 0 10px #C0C0C0;*/
 	border-radius: calc(var(--scrollbar-size) / 2);
-/*				background: #C0C0C0;*/
+/*	background: #C0C0C0;*/
 }
 
 .menu::-webkit-scrollbar,
 .menu::-webkit-scrollbar-track,
 .menu::-webkit-scrollbar-track-piece,
 .menu::-webkit-scrollbar-thumb {
-/*				background: rgba(0, 0, 0, 0.1);*/
+/*	background: rgba(0, 0, 0, 0.1);*/
 }
 
 .menu::-webkit-scrollbar-button {
-/*				display: block;*/
+/*	display: block;*/
 	width: 10px;
 	height: 10px;
-/*				background: #F00;*/
+/*	background: #F00;*/
 }
 
 .menu-container {
