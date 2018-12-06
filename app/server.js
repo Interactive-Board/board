@@ -29,14 +29,41 @@ const qrcodeToDataURL = (text, options) => {
 		});
 	});
 };
+const mysql = require("mysql2/promise");
 const utility = require(Directory.INCLUDE + "utility.js");
 const ServerError = require(Directory.INCLUDE + "ServerError.js");
 
 const listenPort = process.env.PORT || 8080; // 3000;
 const listenAddress = "0.0.0.0";
 
+let sqlConnectionPool;
+
+// Initialization
+(() => {
+	// TODO: Read real values from a config file
+	let mysqlConfig = {
+		host: "localhost",
+		user: "board_db_user",
+		password: "password",
+		database: "board",
+		pools: {
+			connectionLimit: 10
+		}
+	};
+	
+	sqlConnectionPool = mysql.createPool({
+		host: mysqlConfig.host,
+		user: mysqlConfig.user,
+		password: mysqlConfig.password,
+		database: mysqlConfig.database,
+		waitForConnections: true,
+		connectionLimit: mysqlConfig.pools.connectionLimit,
+		queueLimit: 0
+	});
+})();
+
 // Add headers
-application.use((request, response, next) => {
+application.use(async (request, response, next) => {
 	// Request methods you wish to allow
 	response.setHeader("Access-Control-Allow-Methods", ALLOWED_METHODS.join(", "));
 	
@@ -45,10 +72,10 @@ application.use((request, response, next) => {
 });
 
 
-application.get("/", (request, response) => {
+application.get("/", async (request, response) => {
 	response.sendFile(Directory.STATIC + "index.html");
 });
-application.get("/api/user/:userID", (request, response, next) => {
+application.get("/api/user/:userID", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
 	
 	/*
@@ -158,10 +185,9 @@ application.get("/api/news", async (request, response, next) => {
 	next(error);
 });
 
-
 // Catch 405 errors
 // Supported methods are in ALLOWED_METHODS
-application.use((request, response, next) => {
+application.use(async (request, response, next) => {
 	// Filter for methods
 	if (ALLOWED_METHODS.indexOf(request.method) > -1) {
 		// Pass the request down the chain
@@ -180,7 +206,7 @@ application.use((request, response, next) => {
 });
 
 // Attempt to serve any file
-application.use((request, response, next) => {
+application.use(async (request, response, next) => {
 	let path = request.path;
 	// Removes the leading slash
 	let internalPath = Directory.STATIC + path.substring("/".length);
@@ -259,7 +285,7 @@ application.use((request, response, next) => {
 });
 
 // Handle errors
-application.use((mainError, request, response, next) => {
+application.use(async (mainError, request, response, next) => {
 	// If there is a specific error object for the given error, use it. Otherwise, use 500
 	// Internal Server Error
 	let errorType = mainError.status in ServerError ? ServerError[mainError.status] : ServerError[500];
@@ -344,7 +370,26 @@ application.use((mainError, request, response, next) => {
 	});
 });
 
-function start() {
+async function start() {
+	// Test SQL server connection
+	try {
+		console.log("Testing SQL server connection...");
+		await sqlConnectionPool.query("DO 1");
+	} catch(error) {
+		if (error.code == "ECONNREFUSED") {
+			let regex = /connect ECONNREFUSED (\d+\.\d+\.\d+\.\d+):?(\d+)?/g;
+			let result = regex.exec(error.message);
+			
+			if (result) {
+				console.log(`Unable to connect to SQL server at ${result[1]}${result.length > 2 ? ` on port ${result[2]}` : ""}`);
+			} else {
+				console.log(error);
+			}
+		}
+		
+		exit();
+	}
+	
 	server.listen(listenPort, listenAddress, () => {
 		console.log("Listening on " + listenAddress + ":" + listenPort);
 	});
