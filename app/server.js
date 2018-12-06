@@ -1,4 +1,3 @@
-//#!/bin/env node
 "use strict";
 
 console.log("\r---------------------INTERACTIVE BOARD SERVER---------------------");
@@ -404,9 +403,9 @@ process.on("SIGINT", () => {
 	exit();
 });
 
-process.on("unhandledRejection", err => {
+process.on("unhandledRejection", error => {
 	console.log("Caught unhandledRejection");
-	console.log(err);
+	console.log(error);
 });
 
 start();
