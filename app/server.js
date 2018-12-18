@@ -73,6 +73,9 @@ application.use(async (request, response, next) => {
 
 
 application.get("/", async (request, response) => {
+	response.sendFile(Directory.STATIC + "/mockup/slide.html");
+})
+application.get("/news", async (request, response) => {
 	response.sendFile(Directory.STATIC + "News.html");
 });
 application.get("/publications", async (request, response) => {
