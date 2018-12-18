@@ -41,9 +41,10 @@ let sqlConnectionPool;
 (() => {
 	// TODO: Read real values from a config file
 	let mysqlConfig = {
-		host: "localhost",
-		user: "board_db_user",
-		password: "password",
+		host: "127.0.0.1",
+		port: 3306,
+		user: "root",
+		password: "pass",
 		database: "board",
 		pools: {
 			connectionLimit: 10
@@ -72,8 +73,17 @@ application.use(async (request, response, next) => {
 
 
 application.get("/", async (request, response) => {
-	response.sendFile(Directory.STATIC + "index.html");
+	response.sendFile(Directory.STATIC + "News.html");
 });
+application.get("/publications", async (request, response) => {
+	response.sendFile(Directory.STATIC + "Publications.html");
+});
+application.get("/publicationdetails/:pubID", async (request, response) => {
+	//Use request.params.pubID and extract data from the table. For now, we're just going to return the page
+	console.log(request.params.pubID)
+	response.sendFile(Directory.STATIC + "PublicationDetails.html");
+});
+
 application.get("/api/user/:userID", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
 	
@@ -373,7 +383,7 @@ async function start() {
 	// Test SQL server connection
 	try {
 		console.log("Testing SQL server connection...");
-		await sqlConnectionPool.query("DO 1");
+		await sqlConnectionPool.query("SELECT 'test';");
 	} catch(error) {
 		if (error.code == "ECONNREFUSED") {
 			let regex = /connect ECONNREFUSED (\d+\.\d+\.\d+\.\d+):?(\d+)?/g;
@@ -385,8 +395,9 @@ async function start() {
 				console.log(error);
 			}
 		}
-		
-		exit();
+		console.log(error);
+		//Uncomment later
+		//exit();
 	}
 	
 	server.listen(listenPort, listenAddress, () => {
