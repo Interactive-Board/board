@@ -87,10 +87,19 @@ application.get("/publicationdetails/:pubID", async (request, response) => {
 
 // API ROUTES
 application.get("/api/news", async (request, response, next) => {
-	let res = await sqlConnectionPool.query("SELECT * FROM board.view_news");
-	res = JSON.stringify(res[0]);
-	console.log(res);
-	response.send(res);
+	try {
+		let res = await sqlConnectionPool.query("SELECT * FROM board.view_news");
+		res = JSON.stringify(res[0]);
+		console.log(res);
+		response.send(res);
+	} catch (error) {
+		error._requireJSON = true;
+		
+		// Trigger the error handler chain
+		next(error);
+		
+		return;
+	}
 });
 application.get("/api/user/:userID", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
@@ -197,6 +206,7 @@ application.get("/api/news", async (request, response, next) => {
 	error.status = 405;
 	error._method = request.method;
 	error._originalPath = request.path;
+	error._requireJSON = true;
 	
 	// Trigger the error handler chain
 	next(error);
@@ -302,6 +312,7 @@ application.use(async (request, response, next) => {
 });
 
 // Handle errors
+// Whenever an API endpoint should return an error, set _requireJSON on the error object to true
 application.use(async (mainError, request, response, next) => {
 	// If there is a specific error object for the given error, use it. Otherwise, use 500
 	// Internal Server Error
@@ -330,6 +341,14 @@ application.use(async (mainError, request, response, next) => {
 	
 	console.error("Application error reference ID: " + errorID);
 	console.error(mainError);
+	
+	// Whenever an API endpoint should return an error, set _requireJSON on the error object to true
+	if (mainError._requireJSON) {
+		response.setHeader("Content-Type", "text/plain");
+		response.send(JSON.stringify({success: false, error: {status: {code: errorType.code, message: errorType.name}, reference_id: errorID}}));
+		
+		return;
+	}
 	
 	fs.readFile(Directory.TEMPLATE + "error.html", "utf8", (error, data) => {
 		if (error) {
