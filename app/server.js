@@ -44,7 +44,7 @@ let sqlConnectionPool;
 		host: "127.0.0.1",
 		port: 3306,
 		user: "root",
-		password: "pass",
+		password: "password",
 		database: "board",
 		pools: {
 			connectionLimit: 10
@@ -71,10 +71,18 @@ application.use(async (request, response, next) => {
 	next();
 });
 
+// API ROUTES
+application.get("/api/news", async (request, response) => {
+	let res = await sqlConnectionPool.query("SELECT * FROM board.view_news");
+	res = JSON.stringify(res[0]);
+	console.log(res);
+	response.send(res);
+});
 
+// APPLICATION ROUTES
 application.get("/", async (request, response) => {
 	response.sendFile(Directory.STATIC + "/mockup/slide.html");
-})
+});
 application.get("/news", async (request, response) => {
 	response.sendFile(Directory.STATIC + "News.html");
 });

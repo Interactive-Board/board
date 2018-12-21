@@ -124,8 +124,8 @@
 				});
 				
 				_.getJSON("/api/news").then((data) => {
-					slides = data.data;
-					
+					console.log(data[0].NewsTitle);
+					slides = data;
 					// Start the timer
 					timer.className = "start";
 					
@@ -133,7 +133,13 @@
 				}).catch((error) => {
 					console.log(error);
 				});
+
+				document.body.addEventListener('click', tapped, true);
 			});
+
+			function tapped(){
+				location.href = '/news';
+			}
 		</script>
 	</head>
 	<body>
