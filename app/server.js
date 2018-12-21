@@ -414,6 +414,8 @@ async function start() {
 			
 			if (result) {
 				console.log(`Unable to connect to SQL server at ${result[1]}${result.length > 2 ? ` on port ${result[2]}` : ""}`);
+				//FUTURE: Remove later
+				console.warn("WARN: Ignoring failed SQL connection");
 			} else {
 				console.log(error);
 			}
