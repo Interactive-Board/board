@@ -1,5 +1,7 @@
 :root {
 	--scrollbar-size: 16px;
+	/* Temporarily hide scrollbar space */
+	--scrollbar-size: 0px;
 	--menu-height: 80px;
 	--content-height: calc(100vh - var(--menu-height) - var(--scrollbar-size));
 	--menu-button-width: calc(100vw / 4);
@@ -11,21 +13,55 @@ input {
 }
 
 body {
+	display: flex;
+	flex-direction: column;
 	width: 100vw;
+	height: 100vh;
 	margin: 0;
 	padding: 0;
 }
 
-h1 {
+h1,
+h2 {
 	margin: 0;
 	padding: 0.67em 0;
+	text-align: center;
+}
+
+hr {
+	border: none;
+	height: 1px;
+	background: #C3C3C3;
 }
 
 .content {
-	height: var(--content-height);
+/*	height: var(--content-height);*/
+	flex: 1;
+	display: flex;
+	overflow: auto;
+}
+
+.container {
+	overflow: auto;
+}
+
+.container.flow {
+	flex: 1;
+}
+
+.container.flex-row,
+.container.allow-center {
+	display: flex;
+	flex-direction: row;
+}
+
+.container.flex-column {
+	display: flex;
+	flex-direction: column;
 }
 
 .menu {
+	height: var(--menu-height);
 	overflow-x: scroll;
 /*	overflow-x: overlay;*/
 }
@@ -57,8 +93,8 @@ h1 {
 }
 
 .menu-container {
-	width: calc(var(--menu-button-width) * 6);
-	height: var(--menu-height);
+	width: calc(var(--menu-button-width) * 4);
+	height: 100%;
 	font-size: 0;
 }
 

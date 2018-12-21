@@ -50,6 +50,12 @@ p {
 	margin-top: 5px;
 }
 
+hr {
+	border: none;
+	height: 1px;
+	background: #C3C3C3;
+}
+
 button {
   min-width: 64px;
   height: 36px;

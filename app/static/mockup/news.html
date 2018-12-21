@@ -3,26 +3,29 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>News/Upcoming Events</title>
-		<style>
-			html,
-			input {
-				font-family: "Roboto", Helvetica, "Times New Roman", monospace;
-			}
-		</style>
 		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 		<link rel="stylesheet" href="/style/style.css">
-		<script src="News.js"></script>
+		<script src="news.js"></script>
 	</head>
 	<body>
-		<h1 style="text-align: center">News/Upcoming Events</h1>
+		<div class="content">
+			<div class="container flow flex-column">
+				<h1>News/Upcoming Events</h1>
+				<hr>
+				<news-element title="November!" date="11/01/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
 
-		<hr>
-		<news-element title="November!" date="11/01/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+				<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
 
-		<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
-		</news-element>
-
-		<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.">
-		</news-element>
+				<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+			</div>
+		</div>
+		<div class="menu">
+			<div class="menu-container">
+				<a href="/mockup/news"><div class="menu-button" style="background: #00e676">Student Success</div></a>
+				<a href="/mockup/news"><div class="menu-button" style="background: #f1c40f">Alumni Map</div></a>
+				<a href="/mockup/news"><div class="menu-button" style="background: #42a5f5">Directory</div></a>
+				<a href="/mockup/publications"><div class="menu-button" style="background: #e57373">Publications</div></a>
+			</div>
+		</div>
 	</body>
 </html>
