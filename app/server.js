@@ -1,5 +1,3 @@
-"use strict";
-
 console.log("\r---------------------INTERACTIVE BOARD SERVER---------------------");
 
 const Directory = {};
@@ -71,6 +69,7 @@ application.use(async (request, response, next) => {
 	next();
 });
 
+// TODO: Organize application and API routes
 // API ROUTES
 application.get("/api/news", async (request, response) => {
 	let res = await sqlConnectionPool.query("SELECT * FROM board.view_news");
@@ -406,8 +405,8 @@ async function start() {
 				console.log(error);
 			}
 		}
-		console.log(error);
-		//Uncomment later
+
+		//FUTURE: Uncomment later
 		//exit();
 	}
 	
