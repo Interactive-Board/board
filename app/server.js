@@ -318,9 +318,9 @@ application.use(async (mainError, request, response, next) => {
 		errorID = utility.randomString(25);
 	} catch (error) {
 		// Couldn't generate an ID
-		console.error("Application error reference ID: " + errorID);
+		console.error("Application error:");
 		console.error(mainError);
-		console.error("Error generating error ID:");
+		console.error("Error generating reference ID:");
 		console.error(error);
 		
 		// Send a plain text error
@@ -330,11 +330,12 @@ application.use(async (mainError, request, response, next) => {
 		return;
 	}
 	
+	console.error("Application error reference ID: " + errorID);
+	console.error(mainError);
+	
 	fs.readFile(Directory.TEMPLATE + "error.html", "utf8", (error, data) => {
 		if (error) {
 			// Couldn't read the error template
-			console.error("Application error reference ID: " + errorID);
-			console.error(mainError);
 			console.error("Error reading template:");
 			console.error(error);
 
@@ -368,17 +369,12 @@ application.use(async (mainError, request, response, next) => {
 				}
 			});
 			
-			console.error("Application error reference ID: " + errorID);
-			console.error(mainError);
-			
 			response.setHeader("Content-Type", "text/html");
 			console.error("");
 			
 			response.send(errorPage);
 		} catch (error) {
 			// Couldn't compile the error template
-			console.error("Application error reference ID: " + errorID);
-			console.error(mainError);
 			console.error("Error compiling template:");
 			console.error(error);
 			
