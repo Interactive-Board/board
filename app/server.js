@@ -71,19 +71,30 @@ application.use(async (request, response, next) => {
 
 // APPLICATION ROUTES
 application.get("/", async (request, response) => {
-	response.sendFile(Directory.STATIC + "/mockup/slide.html");
+	// Redirect to /mockup/slide
+	// This is to emphasize that whatever is displayed is a mockup, and not intended to represent the final product
+	
+	// Send a 307 Temporary Redirect
+	response.status(307);
+	response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+	response.setHeader("Expires", "Thu, 01 Jan 1970 00:00:00 GMT");
+	response.setHeader("Location", "/mockup/slide");
+	response.send("");
 });
-application.get("/news", async (request, response) => {
-	response.sendFile(Directory.STATIC + "/mockup/news.html");
-});
-application.get("/publications", async (request, response) => {
-	response.sendFile(Directory.STATIC + "/mockup/publications.html");
-});
-application.get("/publicationdetails/:pubID", async (request, response) => {
-	//Use request.params.pubID and extract data from the table. For now, we're just going to return the page
-	console.log(request.params.pubID)
-	response.sendFile(Directory.STATIC + "/mockup/publication_details.html");
-});
+//application.get("/", async (request, response) => {
+//	response.sendFile(Directory.STATIC + "/mockup/slide.html");
+//});
+//application.get("/news", async (request, response) => {
+//	response.sendFile(Directory.STATIC + "/mockup/news.html");
+//});
+//application.get("/publications", async (request, response) => {
+//	response.sendFile(Directory.STATIC + "/mockup/publications.html");
+//});
+//application.get("/publicationdetails/:pubID", async (request, response) => {
+//	//Use request.params.pubID and extract data from the table. For now, we're just going to return the page
+//	console.log(request.params.pubID)
+//	response.sendFile(Directory.STATIC + "/mockup/publication_details.html");
+//});
 
 // API ROUTES
 application.get("/api/news", async (request, response, next) => {
