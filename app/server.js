@@ -74,15 +74,15 @@ application.get("/", async (request, response) => {
 	response.sendFile(Directory.STATIC + "/mockup/slide.html");
 });
 application.get("/news", async (request, response) => {
-	response.sendFile(Directory.STATIC + "News.html");
+	response.sendFile(Directory.STATIC + "/mockup/news.html");
 });
 application.get("/publications", async (request, response) => {
-	response.sendFile(Directory.STATIC + "Publications.html");
+	response.sendFile(Directory.STATIC + "/mockup/publications.html");
 });
 application.get("/publicationdetails/:pubID", async (request, response) => {
 	//Use request.params.pubID and extract data from the table. For now, we're just going to return the page
 	console.log(request.params.pubID)
-	response.sendFile(Directory.STATIC + "PublicationDetails.html");
+	response.sendFile(Directory.STATIC + "/mockup/publication_details.html");
 });
 
 // API ROUTES
