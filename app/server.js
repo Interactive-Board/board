@@ -69,15 +69,6 @@ application.use(async (request, response, next) => {
 	next();
 });
 
-// TODO: Organize application and API routes
-// API ROUTES
-application.get("/api/news", async (request, response) => {
-	let res = await sqlConnectionPool.query("SELECT * FROM board.view_news");
-	res = JSON.stringify(res[0]);
-	console.log(res);
-	response.send(res);
-});
-
 // APPLICATION ROUTES
 application.get("/", async (request, response) => {
 	response.sendFile(Directory.STATIC + "/mockup/slide.html");
@@ -94,6 +85,13 @@ application.get("/publicationdetails/:pubID", async (request, response) => {
 	response.sendFile(Directory.STATIC + "PublicationDetails.html");
 });
 
+// API ROUTES
+application.get("/api/news", async (request, response, next) => {
+	let res = await sqlConnectionPool.query("SELECT * FROM board.view_news");
+	res = JSON.stringify(res[0]);
+	console.log(res);
+	response.send(res);
+});
 application.get("/api/user/:userID", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
 	
