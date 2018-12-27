@@ -48,7 +48,7 @@
 				let whiteColor = {r: 255, g: 255, b: 255};
 				
 				function change(slide) {
-					let backgroundColor = hexToColor(slide.color);
+					let backgroundColor = hexToColor(slide.NewsImageColor);
 					let foregroundColor = "white";
 					
 					let blackContrast = getContrast(backgroundColor, blackColor);
@@ -64,18 +64,18 @@
 					slideElement.className = `slide ${foregroundColor}`;
 					slideElement.style.left = "100vw";
 					let h1 = document.createElement("h1");
-					h1.innerText = slide.title;
+					h1.innerText = slide.NewsTitle;
 					let h2 = document.createElement("h2");
-					h2.innerText = slide.subheading;
+					h2.innerText = slide.NewsSubheading;
 					let code = null;
-					if (slide.qrcode) {
+					if (slide.QRCode) {
 						code = document.createElement("img");
 						code.className = "qrcode";
-						code.src = slide.qrcode;
+						code.src = slide.QRCode;
 					}
 					let description = document.createElement("div");
 					description.className = "description";
-					description.innerText = slide.description;
+					description.innerText = slide.NewsDescription;
 					
 					slideElement.appendChild(h1);
 					slideElement.appendChild(h2);
@@ -91,7 +91,7 @@
 						document.getElementById("idle-slides").className = foregroundColor;
 						previousSlide.style.left = "-100vw";
 						slideElement.style.left = "0";
-						slideContainer.style.background = `#${slide.color}`;
+						slideContainer.style.background = `#${slide.NewsImageColor}`;
 						// Reset the timer
 						timer.className = "reset";
 					}, 100);
@@ -124,8 +124,7 @@
 				});
 				
 				_.getJSON("/api/news").then((data) => {
-					console.log(data[0].NewsTitle);
-					slides = data;
+					slides = data.data;
 					// Start the timer
 					timer.className = "start";
 					
