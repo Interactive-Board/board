@@ -102,10 +102,27 @@ application.get("/api/news", async (request, response, next) => {
 	
 	if (request.method == "GET") {
 		try {
-			let res = await sqlConnectionPool.query("SELECT * FROM board.view_news");
-			res = JSON.stringify({success: true, data: res[0]});
-			console.log(res);
-			response.send(res);
+			let result = (await sqlConnectionPool.query("SELECT * FROM board.view_news"))[0];
+			
+			for (let i = result.length - 1; i >= 0; i--) {
+				// Only display accepted entries
+				if (entry.NewsAcceptedIndicator.data[0] == 0) {
+					result.splice(i, 1);
+					
+					continue;
+				}
+				
+				// Generate QR Codes
+				if (entry.NewsURL !== null) {
+					entry.QRCode = await qrcodeToDataURL(entry.NewsURL, {margin: 0, scale: 1, color: {dark: '#000', light: '#0000'}});
+				}
+			}
+			
+			result = JSON.stringify({success: true, data: result});
+			console.log(result);
+			response.send(result);
+			
+			return;
 		} catch (error) {
 			if (error.code == "ECONNREFUSED") {
 				console.log("WARN: Using placeholder news data as fallback for failed SQL connection");
