@@ -124,6 +124,7 @@ application.get("/api/news", async (request, response, next) => {
 			
 			return;
 		} catch (error) {
+			// FUTURE: Remove fallback news
 			if (error.code == "ECONNREFUSED") {
 				console.log("WARN: Using placeholder news data as fallback for failed SQL connection");
 				
@@ -342,6 +343,7 @@ application.use(async (request, response, next) => {
 
 // Handle errors
 // Whenever an API endpoint should return an error, set _requireJSON on the error object to true
+// TODO: Rework handling of passed down HTTP status codes
 application.use(async (mainError, request, response, next) => {
 	// If there is a specific error object for the given error, use it. Otherwise, use 500
 	// Internal Server Error
@@ -442,7 +444,7 @@ async function start() {
 			let result = regex.exec(error.message);
 			
 			if (result) {
-				console.log(`Unable to connect to SQL server at ${result[1]}${result.length > 2 ? ` on port ${result[2]}` : ""}`);
+				console.log(`FATAL: Unable to connect to SQL server at ${result[1]}${result.length > 2 ? ` on port ${result[2]}` : ""}`);
 				//FUTURE: Remove later
 				console.warn("WARN: Ignoring failed SQL connection");
 			} else {
