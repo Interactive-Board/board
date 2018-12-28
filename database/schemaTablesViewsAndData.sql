@@ -87,7 +87,7 @@ CREATE TABLE `newstbl` (
   `NewsURL` varchar(255) DEFAULT NULL,
   `NewsImageReference` varchar(255) DEFAULT NULL COMMENT 'If this is NULL, must use ImageColor',
   `NewsImageColor` varchar(16) DEFAULT 'FFFFFF' COMMENT 'Stored hex value',
-  `NewsAcceptedIndicator` bit(1) NOT NULL DEFAULT b'0',
+  `NewsAcceptedIndicator` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`NID`),
   KEY `FK_UID_idx` (`UID`),
   CONSTRAINT `FK_News_UID` FOREIGN KEY (`UID`) REFERENCES `usertbl` (`uid`)
@@ -100,7 +100,7 @@ CREATE TABLE `newstbl` (
 
 LOCK TABLES `newstbl` WRITE;
 /*!40000 ALTER TABLE `newstbl` DISABLE KEYS */;
-INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','08-20-18','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','This would be the full description of the news (limit 2000 characters)','www.google.com','imgur.com','#FFFFFF',_binary ''),(2,2,'Fake Title','Fake Subheading','This is a bad description, should not display','Unaccepted','www.google.com/images','imgur.com','#000000',_binary '\0');
+INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','08-20-18','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','This would be the full description of the news (limit 2000 characters)','www.google.com','imgur.com','#FFFFFF',1),(2,2,'Fake Title','Fake Subheading','This is a bad description, should not display','Unaccepted','www.google.com/images','imgur.com','#000000',0);
 /*!40000 ALTER TABLE `newstbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,12 +116,13 @@ CREATE TABLE `publicationstbl` (
   `UID` bigint(15) unsigned NOT NULL,
   `PubTitle` varchar(50) NOT NULL,
   `PubAuthors` varchar(255) NOT NULL COMMENT 'Comma delimited, or direct insert from form field that the user specifies (ideally, we have some sort of parsing for this ourselves)',
-  `PubImageReference` varchar(255) NOT NULL,
+  `PubImageReference` varchar(255) NOT NULL COMMENT 'Never null. If when we upload the PDF or send link to PDF it''s null, we''ll insert a default image reference',
   `PubURL` varchar(255) NOT NULL,
+  `PubAcceptedIndicator` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`PubID`),
   KEY `fk_UID_idx` (`UID`),
   CONSTRAINT `fk_UID` FOREIGN KEY (`UID`) REFERENCES `usertbl` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,6 +131,7 @@ CREATE TABLE `publicationstbl` (
 
 LOCK TABLES `publicationstbl` WRITE;
 /*!40000 ALTER TABLE `publicationstbl` DISABLE KEYS */;
+INSERT INTO `publicationstbl` VALUES (1,1,'My Publication','Joshua Nishiguchi','somedefaultimage.jpg','http://www.google.com',0),(2,2,'My Other Pulication','Joshua Nishiguchi','somedefaultimage.jpg','http://www.google.com',1);
 /*!40000 ALTER TABLE `publicationstbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,6 +162,30 @@ LOCK TABLES `studentsuccesstbl` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `userpermissionmastertbl`
+--
+
+DROP TABLE IF EXISTS `userpermissionmastertbl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `userpermissionmastertbl` (
+  `UPID` int(11) NOT NULL COMMENT 'User permission ID',
+  `UserPermissionTitle` varchar(50) NOT NULL,
+  PRIMARY KEY (`UPID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table that holds the names and permission level definitions for users';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `userpermissionmastertbl`
+--
+
+LOCK TABLES `userpermissionmastertbl` WRITE;
+/*!40000 ALTER TABLE `userpermissionmastertbl` DISABLE KEYS */;
+INSERT INTO `userpermissionmastertbl` VALUES (0,'Student'),(1,'Admin');
+/*!40000 ALTER TABLE `userpermissionmastertbl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usertbl`
 --
 
@@ -170,12 +196,13 @@ CREATE TABLE `usertbl` (
   `UID` bigint(15) unsigned NOT NULL AUTO_INCREMENT,
   `UserFirstName` varchar(255) NOT NULL,
   `UserLastName` varchar(255) NOT NULL,
+  `UserPermissionLevelID` int(11) NOT NULL,
   `UserPhone` varchar(50) DEFAULT NULL,
   `UserCity` varchar(50) DEFAULT NULL,
   `UserState` varchar(50) DEFAULT NULL,
   `UserCountry` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`UID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +211,7 @@ CREATE TABLE `usertbl` (
 
 LOCK TABLES `usertbl` WRITE;
 /*!40000 ALTER TABLE `usertbl` DISABLE KEYS */;
-INSERT INTO `usertbl` VALUES (1,'Joshua','Nishiguchi','808-555-5555','Honolulu','HI','United States'),(2,'Christian','Trigonis','808-555-1234','Honolulu','HI','UnitedStates');
+INSERT INTO `usertbl` VALUES (1,'Joshua','Nishiguchi',0,'808-555-5555','Honolulu','HI','United States'),(2,'Christian','Trigonis',0,'808-555-1234','Honolulu','HI','UnitedStates'),(3,'Scott','Robertson',1,'808-555-9876','Honolulu','HI','United States');
 /*!40000 ALTER TABLE `usertbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -233,4 +260,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-27 19:13:53
+-- Dump completed on 2018-12-28  3:19:05

@@ -97,28 +97,58 @@ application.get("/", async (request, response) => {
 //});
 
 // API ROUTES
+application.use("/api/publications", async (request, response, next) => {
+	response.setHeader("Content-Type", "application/json");
+	if (request.method == "GET") {
+		try {
+			// TODO: change the input value '-1' to input from respone variable
+			// This input parameter defines pagination (which IDs to load from X to X-10)
+			// The first call SHOULD be -1, as this refers to 'defalt' and just grabs the last 10 entries
+			let result = (await sqlConnectionPool.query("CALL board.get_publications (?)", [-1]))[0][0];
+			result = JSON.stringify({ success: true, data: result });
+			response.send(result);
+			return;
+		} catch(error) {
+			//TODO add defaults?
+
+			error._requireJSON = true;
+
+			// Trigger the error handler chain
+			next(error);
+
+			return;
+		}
+	}
+});
+
 application.get("/api/news", async (request, response, next) => {
-	response.setHeader("Content-Type", "text/plain");
+	response.setHeader("Content-Type", "application/json");
 	
 	if (request.method == "GET") {
 		try {
-			let result = (await sqlConnectionPool.query("SELECT * FROM board.view_news"))[0];
+			// TODO: change the input value '-1' to input from respone variable
+			// This input parameter defines pagination (which IDs to load from X to X-10)
+			// The first call SHOULD be -1, as this refers to 'defalt' and just grabs the last 10 entries
+			let result = (await sqlConnectionPool.query("CALL board.get_news (?)", [-1]))[0][0];
+			console.log(JSON.stringify(result));
 			
 			for (let i = result.length - 1; i >= 0; i--) {
 				// Only display accepted entries
-				if (entry.NewsAcceptedIndicator.data[0] == 0) {
-					result.splice(i, 1);
-					
-					continue;
-				}
-				
+				// Already being handled through the view/proc.		-Josh
+				// if (entry.NewsAcceptedIndicator.data[0] == 0) {
+				// 	result.splice(i, 1);
+
+				// 	continue;
+				// }
+
 				// Generate QR Codes
+				console.log('here');
+				console.log(res);
 				if (entry.NewsURL !== null) {
-					entry.QRCode = await qrcodeToDataURL(entry.NewsURL, {margin: 0, scale: 1, color: {dark: '#000', light: '#0000'}});
+					entry.QRCode = qrcodeToDataURL(entry.NewsURL, { margin: 0, scale: 1, color: { dark: '#000', light: '#0000' } });
 				}
 			}
-			
-			result = JSON.stringify({success: true, data: result});
+
 			console.log(result);
 			response.send(result);
 			
