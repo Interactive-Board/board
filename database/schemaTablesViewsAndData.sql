@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `board` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `board`;
 -- MySQL dump 10.13  Distrib 8.0.13, for Win64 (x86_64)
 --
 -- Host: localhost    Database: board
@@ -83,6 +81,7 @@ CREATE TABLE `newstbl` (
   `NID` bigint(15) unsigned NOT NULL AUTO_INCREMENT,
   `UID` bigint(15) unsigned NOT NULL,
   `NewsTitle` varchar(50) NOT NULL,
+  `NewsSubHeading` varchar(30) NOT NULL,
   `NewsDescription` varchar(255) NOT NULL,
   `NewsText` varchar(2000) NOT NULL COMMENT 'Actual news text',
   `NewsURL` varchar(255) DEFAULT NULL,
@@ -101,7 +100,7 @@ CREATE TABLE `newstbl` (
 
 LOCK TABLES `newstbl` WRITE;
 /*!40000 ALTER TABLE `newstbl` DISABLE KEYS */;
-INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','This would be the full description of the news (limit 2000 characters)','www.google.com','imgur.com','#FFFFFF',_binary ''),(2,2,'Fake Title','This is a bad description, should not display','Unaccepted','www.google.com/images','imgur.com','#000000',_binary '\0');
+INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','08-20-18','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','This would be the full description of the news (limit 2000 characters)','www.google.com','imgur.com','#FFFFFF',_binary ''),(2,2,'Fake Title','Fake Subheading','This is a bad description, should not display','Unaccepted','www.google.com/images','imgur.com','#000000',_binary '\0');
 /*!40000 ALTER TABLE `newstbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,4 +233,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-20 20:43:11
+-- Dump completed on 2018-12-27 19:13:53
