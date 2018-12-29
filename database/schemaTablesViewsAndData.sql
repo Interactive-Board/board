@@ -100,7 +100,7 @@ CREATE TABLE `newstbl` (
 
 LOCK TABLES `newstbl` WRITE;
 /*!40000 ALTER TABLE `newstbl` DISABLE KEYS */;
-INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','08-20-18','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','This would be the full description of the news (limit 2000 characters)','www.google.com','imgur.com','#FFFFFF',1),(2,2,'Fake Title','Fake Subheading','This is a bad description, should not display','Unaccepted','www.google.com/images','imgur.com','#000000',0);
+INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','08-20-18','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','This would be the full description of the news (limit 2000 characters)','www.google.com','imgur.com','FFFFFF',1),(2,2,'Fake Title','Fake Subheading','This is a bad description, should not display','Unaccepted','www.google.com/images','imgur.com','000000',0);
 /*!40000 ALTER TABLE `newstbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,4 +260,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-28  3:19:05
+-- Dump completed on 2018-12-28 18:14:24

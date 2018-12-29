@@ -133,6 +133,7 @@ application.get("/api/news", async (request, response, next) => {
 			console.log(JSON.stringify(result));
 			
 			for (let i = result.length - 1; i >= 0; i--) {
+				let entry = result[i];
 				// Only display accepted entries
 				// Already being handled through the view/proc.		-Josh
 				// if (entry.NewsAcceptedIndicator.data[0] == 0) {
@@ -142,15 +143,13 @@ application.get("/api/news", async (request, response, next) => {
 				// }
 
 				// Generate QR Codes
-				console.log('here');
-				console.log(res);
 				if (entry.NewsURL !== null) {
-					entry.QRCode = qrcodeToDataURL(entry.NewsURL, { margin: 0, scale: 1, color: { dark: '#000', light: '#0000' } });
+					entry.QRCode = await qrcodeToDataURL(entry.NewsURL, { margin: 0, scale: 1, color: { dark: '#000', light: '#0000' } });
 				}
+				console.log(entry);
 			}
 
-			console.log(result);
-			response.send(result);
+			response.send(JSON.stringify({ success: true, data: result }));
 			
 			return;
 		} catch (error) {
