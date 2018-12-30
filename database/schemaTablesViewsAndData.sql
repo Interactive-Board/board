@@ -91,7 +91,7 @@ CREATE TABLE `newstbl` (
   PRIMARY KEY (`NID`),
   KEY `FK_UID_idx` (`UID`),
   CONSTRAINT `FK_News_UID` FOREIGN KEY (`UID`) REFERENCES `usertbl` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,6 +234,107 @@ SET character_set_client = utf8mb4;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Dumping routines for database 'board'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `get_news` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_news`(IN MaxNID bigint(15))
+BEGIN
+-- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
+IF MaxNID = -1 THEN
+	SELECT * FROM board.newstbl WHERE NewsAcceptedIndicator = 1 ORDER BY NID DESC LIMIT 10;
+ELSEIF MaxNID > -1 THEN
+	SELECT * FROM board.newstbl WHERE NewsAcceptedIndicator = 1 AND NID < MaxNID ORDER BY NID DESC LIMIT 10;
+END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_publications` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_publications`(IN MaxPubID bigint(15))
+BEGIN
+-- If MaxPubID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
+IF MaxPubID = -1 THEN
+	SELECT * FROM board.publicationstbl WHERE PubAcceptedIndicator = 1 ORDER BY PubID DESC LIMIT 10;
+ELSEIF MaxPubID > -1 THEN
+	SELECT * FROM board.publicationstbl WHERE PubAcceptedIndicator = 1 AND PubID < MaxPubID ORDER BY PubID DESC LIMIT 10;
+END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `insert_news` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_news`(IN in_UID bigint(15), 
+IN in_NewsTitle varchar(50), 
+IN in_NewsSubHeading varchar(30), 
+IN in_NewsDescription varchar(255),
+IN in_NewsText varchar(2000),
+IN in_NewsURL varchar(255),
+IN in_NewsImageReference varchar(255),
+IN in_NewsImageColor varchar(16),
+IN in_NewsAcceptedIndicator tinyint(4))
+BEGIN
+	
+    INSERT INTO board.newstbl (
+		UID,
+        NewsTitle,
+        NewsSubHeading,
+        NewsDescription,
+        NewsText,
+        NewsURL,
+        NewsImageReference,
+        NewsImageColor,
+        NewsAcceptedIndicator
+    )
+	VALUES (in_UID, 
+    in_NewsTitle, 
+    in_NewsSubHeading, 
+    in_NewsDescription, 
+    in_NewsText, 
+    in_NewsURL, 
+    in_NewsImageReference, 
+    in_NewsImageColor, 
+    in_NewsAcceptedIndicator);
+    
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Final view structure for view `view_news`
 --
 
@@ -260,4 +361,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-28 18:14:24
+-- Dump completed on 2018-12-29 20:59:36
