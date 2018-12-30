@@ -3,21 +3,32 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>News/Upcoming Events</title>
-		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Mono:500" rel="stylesheet">
+<!--		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,500|Roboto+Mono:400,500|Ubuntu+Mono:400,700" rel="stylesheet">-->
 		<link rel="stylesheet" href="/style/style.css">
-		<script src="news.js"></script>
+<!--		<script src="news.js"></script>-->
+		<script src="header.js"></script>
+		<script src="/script/component/NewsContainer.js" type="module"></script>
 	</head>
 	<body>
+		<div class="header container flex-row">
+			<div id="weather"><img style="top: 0;" src="/image/weather/cloud.png"></div>
+			<div id="time" class="container flow"><span></span><span class="seconds"></span><span></span></div>
+		</div>
 		<div class="content">
+			<news-container></news-container>
+<!--
 			<div class="container flow flex-column">
 				<h1>News/Upcoming Events</h1>
-				<hr>
-				<news-element title="November!" date="11/01/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+				<div class="container">
+					<news-element title="November!" date="11/01/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
 
-				<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+					<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
 
-				<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+					<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+				</div>
 			</div>
+-->
 		</div>
 		<div class="menu">
 			<div class="menu-container">
