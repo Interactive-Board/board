@@ -3,11 +3,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Publications</title>
-		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Mono:500" rel="stylesheet">
 		<link rel="stylesheet" href="/style/style.css">
-		<script src="news.js"></script>
+<!--		<script src="news.js"></script>-->
+		<script src="header.js"></script>
+		<script src="/script/component/NewsContainer.js" type="module"></script>
 	</head>
 	<body>
+		<div class="header container flex-row">
+			<div id="weather"><img style="top: 0;" src="/image/weather/cloud.png"></div>
+			<div id="time" class="container flow"><span></span><span class="seconds"></span><span></span></div>
+		</div>
 		<div class="content">
 			<div class="container flow flex-column">
 				<h1>Publications</h1>
@@ -30,7 +36,11 @@
 				</div>
 			</div>
 <!--			<div style="display: inline-block; padding: 10px 20px; background-color: lightgray; float: right; width: 500px; box-sizing: border-box;">-->
-			<div class="container" style="width: 500px;">
+			<div class="container" style="width: 25vw;">
+<!--
+				<div style="background: #E2E2E2;">
+					<news-container></news-container>
+-->
 				<div style="padding: 10px 20px; background: #E2E2E2;">
 					<h2>News/Upcoming Events</h2>
 					<hr>

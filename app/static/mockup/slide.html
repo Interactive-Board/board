@@ -132,8 +132,33 @@
 				}).catch((error) => {
 					console.log(error);
 				});
-
+				
 				document.body.addEventListener('click', tapped, true);
+				document.body.addEventListener("keydown", (event) => {
+					if (timer.className != "start") {
+						return;
+					}
+					
+					timer.className = "";
+					
+					if (event.key == "ArrowLeft") {
+						slide--;
+						
+						if (slide < 0) {
+							slide = slides.length - 1;
+						}
+						
+						change(slides[slide]);
+					} else if (event.key == "ArrowRight") {
+						slide++;
+						
+						if (slide >= slides.length) {
+							slide = 0;
+						}
+						
+						change(slides[slide]);
+					}
+				});
 			});
 
 			function tapped(){
