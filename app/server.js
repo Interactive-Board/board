@@ -81,20 +81,6 @@ application.get("/", async (request, response) => {
 	response.setHeader("Location", "/mockup/slide");
 	response.send("");
 });
-//application.get("/", async (request, response) => {
-//	response.sendFile(Directory.STATIC + "/mockup/slide.html");
-//});
-//application.get("/news", async (request, response) => {
-//	response.sendFile(Directory.STATIC + "/mockup/news.html");
-//});
-//application.get("/publications", async (request, response) => {
-//	response.sendFile(Directory.STATIC + "/mockup/publications.html");
-//});
-//application.get("/publicationdetails/:pubID", async (request, response) => {
-//	//Use request.params.pubID and extract data from the table. For now, we're just going to return the page
-//	console.log(request.params.pubID)
-//	response.sendFile(Directory.STATIC + "/mockup/publication_details.html");
-//});
 
 // API ROUTES
 application.use("/api/publications", async (request, response, next) => {
@@ -121,7 +107,7 @@ application.use("/api/publications", async (request, response, next) => {
 	}
 });
 
-application.get("/api/news", async (request, response, next) => {
+application.use("/api/news", async (request, response, next) => {
 	response.setHeader("Content-Type", "application/json");
 	
 	if (request.method == "GET") {
@@ -247,7 +233,7 @@ application.get("/api/news", async (request, response, next) => {
 	// Trigger the error handler chain
 	next(error);
 });
-application.get("/api/user/:userID", async (request, response, next) => {
+application.use("/api/user/:userID", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
 	
 	/*
