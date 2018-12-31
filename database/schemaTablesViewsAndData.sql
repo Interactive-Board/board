@@ -31,7 +31,7 @@ CREATE TABLE `directorylocationandhourstbl` (
   PRIMARY KEY (`DLocAndHoursID`),
   KEY `fk_DID_idx` (`DID`),
   CONSTRAINT `fk_DID` FOREIGN KEY (`DID`) REFERENCES `directorytbl` (`did`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Subtable to the Directory Table to hold multiple course information, multiple office locations, and multiple office hours';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Subtable to the Directory Table to hold multiple course information, multiple office locations, and multiple office hours';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,7 +58,7 @@ CREATE TABLE `directorytbl` (
   `FacultyEmail` varchar(50) NOT NULL,
   `FacultyHeadshotImageReference` varchar(255) NOT NULL,
   PRIMARY KEY (`DID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,11 @@ CREATE TABLE `newstbl` (
   PRIMARY KEY (`NID`),
   KEY `FK_UID_idx` (`UID`),
   CONSTRAINT `FK_News_UID` FOREIGN KEY (`UID`) REFERENCES `usertbl` (`uid`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+>>>>>>> master
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +126,7 @@ CREATE TABLE `publicationstbl` (
   PRIMARY KEY (`PubID`),
   KEY `fk_UID_idx` (`UID`),
   CONSTRAINT `fk_UID` FOREIGN KEY (`UID`) REFERENCES `usertbl` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +153,7 @@ CREATE TABLE `studentsuccesstbl` (
   `SSProjectDescription` varchar(50) NOT NULL,
   `SSProjectImageReference` varchar(255) NOT NULL,
   PRIMARY KEY (`SSID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +176,7 @@ CREATE TABLE `userpermissionmastertbl` (
   `UPID` int(11) NOT NULL COMMENT 'User permission ID',
   `UserPermissionTitle` varchar(50) NOT NULL,
   PRIMARY KEY (`UPID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Table that holds the names and permission level definitions for users';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Table that holds the names and permission level definitions for users';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +206,7 @@ CREATE TABLE `usertbl` (
   `UserState` varchar(50) DEFAULT NULL,
   `UserCountry` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`UID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -344,7 +348,7 @@ DELIMITER ;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `view_news` AS select `newstbl`.`NewsTitle` AS `NewsTitle`,`newstbl`.`NewsDescription` AS `NewsDescription`,`newstbl`.`NewsText` AS `NewsText`,`newstbl`.`NewsURL` AS `NewsURL`,`newstbl`.`NewsImageReference` AS `NewsImageReference`,`newstbl`.`NewsImageColor` AS `NewsImageColor`,`newstbl`.`NewsAcceptedIndicator` AS `NewsAcceptedIndicator` from `newstbl` where (`newstbl`.`NewsAcceptedIndicator` = 1) */;
