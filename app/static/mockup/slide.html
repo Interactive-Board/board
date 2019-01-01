@@ -66,7 +66,7 @@
 					let h1 = document.createElement("h1");
 					h1.innerText = slide.NewsTitle;
 					let h2 = document.createElement("h2");
-					h2.innerText = slide.NewsSubheading;
+					h2.innerText = slide.NewsSubHeading;
 					let code = null;
 					if (slide.QRCode) {
 						code = document.createElement("img");
@@ -134,6 +134,8 @@
 				});
 				
 				document.body.addEventListener('click', tapped, true);
+				
+				// FUTURE: Remove keyboard navigation
 				document.body.addEventListener("keydown", (event) => {
 					if (timer.className != "start") {
 						return;
