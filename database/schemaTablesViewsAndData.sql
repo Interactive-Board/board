@@ -86,7 +86,7 @@ CREATE TABLE `newstbl` (
   `NewsText` varchar(2000) NOT NULL COMMENT 'Actual news text',
   `NewsURL` varchar(255) DEFAULT NULL,
   `NewsImageReference` varchar(255) DEFAULT NULL COMMENT 'If this is NULL, must use ImageColor',
-  `NewsImageColor` varchar(16) DEFAULT 'FFFFFF' COMMENT 'Stored hex value',
+  `NewsBackgroundColor` varchar(16) DEFAULT 'FFFFFF' COMMENT 'Stored hex value',
   `NewsAcceptedIndicator` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`NID`),
   KEY `FK_UID_idx` (`UID`),
@@ -229,7 +229,7 @@ SET character_set_client = utf8mb4;
  1 AS `NewsText`,
  1 AS `NewsURL`,
  1 AS `NewsImageReference`,
- 1 AS `NewsImageColor`,
+ 1 AS `NewsBackgroundColor`,
  1 AS `NewsAcceptedIndicator`*/;
 SET character_set_client = @saved_cs_client;
 
@@ -301,7 +301,7 @@ IN in_NewsDescription varchar(255),
 IN in_NewsText varchar(2000),
 IN in_NewsURL varchar(255),
 IN in_NewsImageReference varchar(255),
-IN in_NewsImageColor varchar(16),
+IN in_NewsBackgroundColor varchar(16),
 IN in_NewsAcceptedIndicator tinyint(4))
 BEGIN
 	
@@ -313,7 +313,7 @@ BEGIN
         NewsText,
         NewsURL,
         NewsImageReference,
-        NewsImageColor,
+        NewsBackgroundColor,
         NewsAcceptedIndicator
     )
 	VALUES (in_UID, 
@@ -323,7 +323,7 @@ BEGIN
     in_NewsText, 
     in_NewsURL, 
     in_NewsImageReference, 
-    in_NewsImageColor, 
+    in_NewsBackgroundColor, 
     in_NewsAcceptedIndicator);
     
     
@@ -347,7 +347,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_news` AS select `newstbl`.`NewsTitle` AS `NewsTitle`,`newstbl`.`NewsDescription` AS `NewsDescription`,`newstbl`.`NewsText` AS `NewsText`,`newstbl`.`NewsURL` AS `NewsURL`,`newstbl`.`NewsImageReference` AS `NewsImageReference`,`newstbl`.`NewsImageColor` AS `NewsImageColor`,`newstbl`.`NewsAcceptedIndicator` AS `NewsAcceptedIndicator` from `newstbl` where (`newstbl`.`NewsAcceptedIndicator` = 1) */;
+/*!50001 VIEW `view_news` AS select `newstbl`.`NewsTitle` AS `NewsTitle`,`newstbl`.`NewsDescription` AS `NewsDescription`,`newstbl`.`NewsText` AS `NewsText`,`newstbl`.`NewsURL` AS `NewsURL`,`newstbl`.`NewsImageReference` AS `NewsImageReference`,`newstbl`.`NewsBackgroundColor` AS `NewsBackgroundColor`,`newstbl`.`NewsAcceptedIndicator` AS `NewsAcceptedIndicator` from `newstbl` where (`newstbl`.`NewsAcceptedIndicator` = 1) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;

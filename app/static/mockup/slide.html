@@ -48,7 +48,7 @@
 				let whiteColor = {r: 255, g: 255, b: 255};
 				
 				function change(slide) {
-					let backgroundColor = hexToColor(slide.NewsImageColor);
+					let backgroundColor = hexToColor(slide.NewsBackgroundColor);
 					let foregroundColor = "white";
 					
 					let blackContrast = getContrast(backgroundColor, blackColor);
@@ -91,7 +91,7 @@
 						document.getElementById("idle-slides").className = foregroundColor;
 						previousSlide.style.left = "-100vw";
 						slideElement.style.left = "0";
-						slideContainer.style.background = `#${slide.NewsImageColor}`;
+						slideContainer.style.background = `#${slide.NewsBackgroundColor}`;
 						// Reset the timer
 						timer.className = "reset";
 					}, 100);
