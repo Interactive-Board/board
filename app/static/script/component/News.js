@@ -23,8 +23,10 @@ class News extends HTMLElement {
 //		let button = document.createElement("button");
 //		button.className = "button";
 //		button.innerText = "READ MORE";
-		let button = document.createElement("button-element");
-		button.setAttribute("text", "read more");
+		let qrButton = document.createElement("button-element");
+		qrButton.setAttribute("text", "qr code");
+		let readMoreButton = document.createElement("button-element");
+		readMoreButton.setAttribute("text", "read more");
 
 		this.titleElement = title;
 		this.dateElement = date;
@@ -62,7 +64,8 @@ hr {
 		shadow.appendChild(date);
 		shadow.appendChild(description);
 		shadow.appendChild(buttonContainer);
-		buttonContainer.appendChild(button);
+		buttonContainer.appendChild(qrButton);
+		buttonContainer.appendChild(readMoreButton);
 		
 		let observer = new MutationObserver((records, observer) => this.observed(records, observer));
 		let observationConfig = {attributeFilter: ["title", "date", "description"], attributes: true};
