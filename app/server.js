@@ -2,6 +2,7 @@ console.log("\r---------------------INTERACTIVE BOARD SERVER--------------------
 
 const Directory = {};
 Directory.SELF = __dirname + "/";
+Directory.CONFIG = Directory.SELF + "config/";
 Directory.INCLUDE = Directory.SELF + "include/";
 Directory.STATIC = Directory.SELF + "static/";
 Directory.TEMPLATE = Directory.SELF + "template/";
@@ -33,29 +34,37 @@ const ServerError = require(Directory.INCLUDE + "ServerError.js");
 const listenPort = process.env.PORT || 8080; // 3000;
 const listenAddress = "0.0.0.0";
 
+let config;
 let sqlConnectionPool;
 
 // Initialization
 (() => {
-	// TODO: Read real values from a config file
-	let mysqlConfig = {
-		host: "127.0.0.1",
-		port: 3306,
-		user: "root",
-		password: "password",
-		database: "board",
-		pools: {
-			connectionLimit: 10
+	// FUTURE: Read all json files in config directory
+	
+	// Read settings.json configuration file
+	try {
+		config = fs.readFileSync(Directory.CONFIG + "settings.json");
+		config = JSON.parse(config);
+	} catch (error) {
+		if (error.code == "ENOENT") {
+			console.error("FATAL: Missing settings.json. Use sample.settings.json in the config directory to create one.");
+		} else if (error.name == "SyntaxError") {
+			console.error(`FATAL: Unable to parse settings.json. ${error.message}`);
+		} else {
+			console.log(error);
 		}
-	};
+		
+		exit(-1);
+	}
 	
 	sqlConnectionPool = mysql.createPool({
-		host: mysqlConfig.host,
-		user: mysqlConfig.user,
-		password: mysqlConfig.password,
-		database: mysqlConfig.database,
+		host: config.sql.host,
+		port: config.sql.port,
+		user: config.sql.user,
+		password: config.sql.password,
+		database: config.sql.database,
 		waitForConnections: true,
-		connectionLimit: mysqlConfig.pools.connectionLimit,
+		connectionLimit: config.sql.poolConnectionLimit,
 		queueLimit: 0
 	});
 })();
@@ -476,9 +485,9 @@ async function start() {
 	});
 }
 
-function exit() {
-	console.log("-------------------------SERVER SHUTDOWN-------------------------");
-	process.exit();
+function exit(exitCode) {
+	console.log("--------------------------SERVER STOPPED--------------------------");
+	process.exit((typeof exitCode) == "number" ? exitCode : 0);
 }
 
 process.on("SIGINT", () => {

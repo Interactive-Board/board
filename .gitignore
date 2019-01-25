@@ -63,3 +63,7 @@ typings/
 *.iml
 .idea/
 .DS_Store
+
+# App configuration
+app/config/*.json
+!app/config/sample.*.json
