@@ -1,7 +1,7 @@
 const application = require('express');
 const applicationRouter = application.Router();
 
-applicationRouter.get("/api/user/:userID", async (request, response, next) => {
+applicationRouter.get("/:userID", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
 	
 	/*

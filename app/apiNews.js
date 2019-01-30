@@ -1,7 +1,9 @@
+const sqlConnectionPool = require('./db');
+const { qrcodeToDataURL } = require('./server');
 const application = require('express');
 const applicationRouter = application.Router();
 
-applicationRouter.get("/api/news", async (request, response, next) => {
+applicationRouter.get("/", async (request, response, next) => {
 	response.setHeader("Content-Type", "application/json");
 	
 	if (request.method == "GET") {
@@ -11,6 +13,7 @@ applicationRouter.get("/api/news", async (request, response, next) => {
 			// The first call SHOULD be -1, as this refers to 'defalt' and just grabs the last 10 entries
 			let result = (await sqlConnectionPool.query("CALL board.get_news (?)", [-1]))[0][0];
 			console.log(JSON.stringify(result));
+			console.log(qrcodeToDataURL);
 			
 			for (let i = result.length - 1; i >= 0; i--) {
 				let entry = result[i];

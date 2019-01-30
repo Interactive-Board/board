@@ -27,47 +27,15 @@ const qrcodeToDataURL = (text, options) => {
 		});
 	});
 };
-const mysql = require("mysql2/promise");
+
 const utility = require(Directory.INCLUDE + "utility.js");
 const ServerError = require(Directory.INCLUDE + "ServerError.js");
 
 const listenPort = process.env.PORT || 8090; // 3000;
 const listenAddress = "0.0.0.0";
 
-let config;
-let sqlConnectionPool;
+let sqlConnectionPool = require('./db');
 
-// Initialization
-(() => {
-	// FUTURE: Read all json files in config directory
-	
-	// Read settings.json configuration file
-	try {
-		config = fs.readFileSync(Directory.CONFIG + "settings.json");
-		config = JSON.parse(config);
-	} catch (error) {
-		if (error.code == "ENOENT") {
-			console.error("FATAL: Missing settings.json. Use sample.settings.json in the config directory to create one.");
-		} else if (error.name == "SyntaxError") {
-			console.error(`FATAL: Unable to parse settings.json. ${error.message}`);
-		} else {
-			console.log(error);
-		}
-		
-		exit(-1);
-	}
-	
-	sqlConnectionPool = mysql.createPool({
-		host: config.sql.host,
-		port: config.sql.port,
-		user: config.sql.user,
-		password: config.sql.password,
-		database: config.sql.database,
-		waitForConnections: true,
-		connectionLimit: config.sql.poolConnectionLimit,
-		queueLimit: 0
-	});
-})();
 
 // Add headers
 application.use(async (request, response, next) => {
@@ -91,12 +59,18 @@ application.get("/", async (request, response) => {
 	response.send("");
 });
 
+//Export necessary data/methods from server.js
+module.exports = {
+	qrcodeToDataURL
+};
+
+
 // API ROUTES
 var apiUser = require('./apiUser');
 var apiPublications = require('./apiPublications');
 var apiNews = require('./apiNews');
 
-application.use('/api/user/:userID', apiUser);
+application.use('/api/user/', apiUser);
 application.use('/api/publications', apiPublications);
 application.use('/api/news', apiNews);
 
@@ -332,5 +306,6 @@ process.on("unhandledRejection", error => {
 	console.log("Caught unhandledRejection");
 	console.log(error);
 });
+
 
 start();

@@ -1,7 +1,7 @@
 const application = require('express');
 const applicationRouter = application.Router();
 
-applicationRouter.get("/api/publications", async (request, response, next) => {
+applicationRouter.get("/", async (request, response, next) => {
 	response.setHeader("Content-Type", "application/json");
 	if (request.method == "GET") {
 		try {
