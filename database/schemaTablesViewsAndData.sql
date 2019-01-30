@@ -341,7 +341,27 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_single_news`(IN lookup_NID bigint(15))
 BEGIN
 -- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
-SELECT * FROM board.newstbl WHERE NID = lookup_NID;
+SELECT * FROM board.newstbl WHERE NID = lookup_NID AND NewsAcceptedIndicator = 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_single_publication` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_single_publication`(IN lookup_PubID bigint(15))
+BEGIN
+-- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
+SELECT * FROM board.publicationstbl WHERE PubID = lookup_PubID AND PubAcceptedIndicator = 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -425,4 +445,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-29 17:54:42
+-- Dump completed on 2019-01-29 18:23:41
