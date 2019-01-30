@@ -69,10 +69,12 @@ module.exports = {
 var apiUser = require('./apiUser');
 var apiPublications = require('./apiPublications');
 var apiNews = require('./apiNews');
+var apiDirectory = require('./apiDirectory');
 
 application.use('/api/user/', apiUser);
 application.use('/api/publications', apiPublications);
 application.use('/api/news', apiNews);
+application.use('/api/directory', apiDirectory);
 
 // Catch 405 errors
 // Supported methods are in ALLOWED_METHODS
