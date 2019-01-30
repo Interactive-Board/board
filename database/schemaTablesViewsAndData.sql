@@ -31,7 +31,7 @@ CREATE TABLE `directorylocationandhourstbl` (
   PRIMARY KEY (`DLocAndHoursID`),
   KEY `fk_DID_idx` (`DID`),
   CONSTRAINT `fk_DID` FOREIGN KEY (`DID`) REFERENCES `directorytbl` (`did`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Subtable to the Directory Table to hold multiple course information, multiple office locations, and multiple office hours';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Subtable to the Directory Table to hold multiple course information, multiple office locations, and multiple office hours';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,7 +58,7 @@ CREATE TABLE `directorytbl` (
   `FacultyEmail` varchar(50) NOT NULL,
   `FacultyHeadshotImageReference` varchar(255) NOT NULL,
   PRIMARY KEY (`DID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `newstbl` (
   PRIMARY KEY (`NID`),
   KEY `FK_UID_idx` (`UID`),
   CONSTRAINT `FK_News_UID` FOREIGN KEY (`UID`) REFERENCES `usertbl` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,7 @@ CREATE TABLE `publicationstbl` (
   PRIMARY KEY (`PubID`),
   KEY `fk_UID_idx` (`UID`),
   CONSTRAINT `fk_UID` FOREIGN KEY (`UID`) REFERENCES `usertbl` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +149,7 @@ CREATE TABLE `studentsuccesstbl` (
   `SSProjectDescription` varchar(50) NOT NULL,
   `SSProjectImageReference` varchar(255) NOT NULL,
   PRIMARY KEY (`SSID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `userpermissionmastertbl` (
   `UPID` int(11) NOT NULL COMMENT 'User permission ID',
   `UserPermissionTitle` varchar(50) NOT NULL,
   PRIMARY KEY (`UPID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Table that holds the names and permission level definitions for users';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table that holds the names and permission level definitions for users';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +202,7 @@ CREATE TABLE `usertbl` (
   `UserState` varchar(50) DEFAULT NULL,
   `UserCountry` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`UID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,6 +236,30 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'board'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `get_directory` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_directory`(IN MaxDID bigint(15))
+BEGIN
+-- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
+IF MaxDID = -1 THEN
+	SELECT * FROM board.directorytbl ORDER BY DID DESC LIMIT 10;
+ELSEIF MaxDID > -1 THEN
+	SELECT * FROM board.directorytbl WHERE DID < MaxDID ORDER BY DID DESC LIMIT 10;
+END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_news` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -278,6 +302,46 @@ IF MaxPubID = -1 THEN
 ELSEIF MaxPubID > -1 THEN
 	SELECT * FROM board.publicationstbl WHERE PubAcceptedIndicator = 1 AND PubID < MaxPubID ORDER BY PubID DESC LIMIT 10;
 END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_single_directory` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_single_directory`(IN lookup_DID bigint(15))
+BEGIN
+-- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
+SELECT * FROM board.directorytbl WHERE DID = lookup_DID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_single_news` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_single_news`(IN lookup_NID bigint(15))
+BEGIN
+-- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
+SELECT * FROM board.newstbl WHERE NID = lookup_NID;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -361,4 +425,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-29 20:59:36
+-- Dump completed on 2019-01-29 17:54:42
