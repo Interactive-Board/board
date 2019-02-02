@@ -76,6 +76,7 @@ application.use('/api/publications', apiPublications);
 application.use('/api/news', apiNews);
 application.use('/api/directory', apiDirectory);
 
+/*
 // Catch 405 errors
 // Supported methods are in ALLOWED_METHODS
 application.use(async (request, response, next) => {
@@ -266,6 +267,7 @@ application.use(async (mainError, request, response, next) => {
 		}
 	});
 });
+*/
 
 async function start() {
 	// Test SQL server connection
