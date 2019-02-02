@@ -272,7 +272,7 @@ async function start() {
 	try {
 		console.log("Testing SQL server connection...");
 		await sqlConnectionPool.query("SELECT 'test';");
-	} catch(error) {
+	} catch (error) {
 		if (error.code == "ECONNREFUSED") {
 			let regex = /connect ECONNREFUSED (\d+\.\d+\.\d+\.\d+):?(\d+)?/g;
 			let result = regex.exec(error.message);
@@ -284,8 +284,9 @@ async function start() {
 			} else {
 				console.log(error);
 			}
+		} else {
+			console.log(error);
 		}
-		console.log(error);
 		//FUTURE: Uncomment later
 		//exit();
 	}
