@@ -1,8 +1,8 @@
-import Container from "./Container.js";
-import Heading from "./Heading.js";
-import News from "./News.js";
+import Container from "../component/Container.js";
+import Heading from "../component/Heading.js";
+import News from "../component/News.js";
 
-class NewsContainer extends HTMLElement {
+class NewsPage extends HTMLElement {
 	constructor() {
 		// Always call super first in constructor
 		super();
@@ -118,6 +118,6 @@ class NewsContainer extends HTMLElement {
 	}
 }
 
-customElements.define("news-container", NewsContainer);
+customElements.define("news-page", NewsPage);
 
-export default NewsContainer;
+export default NewsPage;
