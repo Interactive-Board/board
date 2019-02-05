@@ -1,5 +1,5 @@
 import Container from "./Container.js";
-import Header from "./Header.js";
+import Heading from "./Heading.js";
 import News from "./News.js";
 
 class NewsContainer extends HTMLElement {
@@ -17,7 +17,7 @@ class NewsContainer extends HTMLElement {
 		wrapper.style.height = "100%";
 		wrapper.setAttribute("flow", "");
 		wrapper.setAttribute("flex", "column");
-		let title = document.createElement("header-element");
+		let title = document.createElement("heading-element");
 		title.setAttribute("text", "News/Upcoming Events");
 		let hr = document.createElement("hr");
 		let container = document.createElement("container-element");

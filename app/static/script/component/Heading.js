@@ -1,4 +1,4 @@
-class Header extends HTMLElement {
+class Heading extends HTMLElement {
 	constructor() {
 		// Always call super first in constructor
 		super();
@@ -60,6 +60,6 @@ h6 {
 	}
 }
 
-customElements.define("header-element", Header);
+customElements.define("heading-element", Heading);
 
-export default Header;
+export default Heading;
