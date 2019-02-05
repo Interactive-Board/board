@@ -1,6 +1,6 @@
-import "./Container.js";
-import "./Heading.js";
-import "./News.js";
+import Container from "./Container.js";
+import Header from "./Header.js";
+import News from "./News.js";
 
 class NewsContainer extends HTMLElement {
 	constructor() {
@@ -119,3 +119,5 @@ class NewsContainer extends HTMLElement {
 }
 
 customElements.define("news-container", NewsContainer);
+
+export default NewsContainer;

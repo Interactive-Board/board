@@ -61,3 +61,5 @@ h6 {
 }
 
 customElements.define("header-element", Header);
+
+export default Header;

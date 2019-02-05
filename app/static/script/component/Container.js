@@ -81,3 +81,5 @@ class Container extends HTMLElement {
 }
 
 customElements.define("container-element", Container);
+
+export default Container;

@@ -53,3 +53,5 @@ h2 {
 }
 
 customElements.define("navigation-button", NavigationButton);
+
+export default NavigationButton;

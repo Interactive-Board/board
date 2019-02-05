@@ -91,3 +91,5 @@ button:focus {
 }
 
 customElements.define("button-element", Button);
+
+export default Button;

@@ -1,4 +1,4 @@
-import "./Button.js";
+import Button from "./Button.js";
 
 class News extends HTMLElement {
 	constructor() {
@@ -100,3 +100,5 @@ hr {
 }
 
 customElements.define("news-element", News);
+
+export default News;
