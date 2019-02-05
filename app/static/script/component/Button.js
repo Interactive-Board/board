@@ -15,19 +15,26 @@ class Button extends HTMLElement {
 		let style = document.createElement("style");
 		style.textContent = `
 button {
-	min-width: 64px;
-	height: 36px;
-	margin: 0 5px;
-	padding: 0 16px;
-	border: 1px solid #DADCE0;
-	border-radius: 4px;
+	/* min-width: 64px; */
+	min-width: 4rem;
+	/* height: 36px; */
+	height: 2.25rem;
+	/* margin: 0 5px; */
+	margin: 0 0.3125rem;
+	/* padding: 0 16px; */
+	padding: 0 1rem;
+	/* border: 1px solid #DADCE0; */
+	border: 0.0625rem solid #DADCE0;
+	/* border-radius: 4px; */
+	border-radius: 0.25rem;
 	outline: none;
 	background: #FFF;
 	font-family: "Roboto", Helvetica, "Times New Roman", sans-serif;
 	font-display: swap;
 	font-size: 0.875em;
 	font-weight: bold;
-	line-height: 36px;
+	/* line-height: 36px; */
+	line-height: 2.25rem;
 	text-transform: uppercase;
 	box-sizing: border-box;
 	transition: border-color 50ms, background 50ms, box-shadow 250ms;
@@ -43,7 +50,8 @@ button:last-child {
 }
 
 button:hover {
-	box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.08), 0 1px 10px 0 rgba(0,0,0,.12);
+	/* box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.08), 0 1px 10px 0 rgba(0,0,0,.12); */
+	box-shadow: 0 0.125rem 0.25rem -0.0625rem rgba(0,0,0,.2), 0 0.25rem 0.3125rem 0 rgba(0,0,0,.08), 0 0.0625rem 0.625rem 0 rgba(0,0,0,.12);
 }
 
 button:focus {
