@@ -6,13 +6,13 @@ let _ = {};
 			let request = new XMLHttpRequest();
 
 			request.addEventListener("load", (event) => {
-				resolve(request.responseText, request);
+				resolve({responseText: request.responseText, request: request});
 			});
 			request.addEventListener("error", (event) => {
-				reject(event, request);
+				reject({event: event, request: request});
 			});
 			request.addEventListener("abort", (event) => {
-				reject(event, request);
+				reject({event: event, request: request});
 			});
 
 			request.open("GET", url, true);
