@@ -28,3 +28,5 @@ let _ = {};
 		});
 	};
 })();
+
+export default _;

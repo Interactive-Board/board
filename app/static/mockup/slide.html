@@ -4,8 +4,9 @@
 		<title>Slide</title>
 		<link href="https://fonts.googleapis.com/css?family=Roboto:300|Nunito:300" rel="stylesheet">
 		<link rel="stylesheet" href="/style/slide.css">
-		<script src="/script/lib.js"></script>
-		<script>
+		<script type="module">
+			import _ from "/script/lib.js";
+			
 			let slides = [];
 			
 			function hexToColor(hexColor) {
