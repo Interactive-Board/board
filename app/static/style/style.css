@@ -66,14 +66,6 @@ hr {
 	text-align: center;
 /*	font-family: "Roboto Mono", Helvetica, "Times New Roman", monospace;*/
 	font: 500 1.25em "Roboto Mono";
-/*
-	font: 500 1.25em "IBM Plex Mono";
-	font: 400 1.55em "Ubuntu Mono";
-*/
-/*
-	font-size: 1.25em;
-	font-weight: 500;
-*/
 	line-height: var(--header-height);
 	overflow: hidden;
 }
