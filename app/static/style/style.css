@@ -51,11 +51,15 @@ hr {
 }
 
 #weather {
+	position: fixed;
+	width: var(--header-height);
+	height: var(--header-height);
 	margin-left: 1.4vw;
+	overflow: hidden;
 }
 
 #weather img {
-	position: fixed;
+	position: absolute;
 	display: block;
 	height: var(--header-height);
 	transition: top 1s;
