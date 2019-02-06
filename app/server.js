@@ -5,6 +5,7 @@ Directory.SELF = __dirname + "/";
 Directory.CONFIG = Directory.SELF + "config/";
 Directory.INCLUDE = Directory.SELF + "include/";
 Directory.STATIC = Directory.SELF + "static/";
+Directory.ROUTER = Directory.SELF + "router/";
 Directory.TEMPLATE = Directory.SELF + "template/";
 const ALLOWED_METHODS = ["GET", "POST", "PUT", "DELETE", "PATCH"];
 
@@ -66,10 +67,10 @@ module.exports = {
 
 
 // API ROUTES
-var apiUser = require('./apiUser');
-var apiPublications = require('./apiPublications');
-var apiNews = require('./apiNews');
-var apiDirectory = require('./apiDirectory');
+var apiUser = require(Directory.ROUTER + 'apiUser');
+var apiPublications = require(Directory.ROUTER + 'apiPublications');
+var apiNews = require(Directory.ROUTER + 'apiNews');
+var apiDirectory = require(Directory.ROUTER + 'apiDirectory');
 
 application.use('/api/user/', apiUser);
 application.use('/api/publications', apiPublications);

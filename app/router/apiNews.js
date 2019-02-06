@@ -1,5 +1,5 @@
-const sqlConnectionPool = require('./db');
-const { qrcodeToDataURL } = require('./server');
+const sqlConnectionPool = require('../db');
+const { qrcodeToDataURL } = require('../server');
 const application = require('express');
 const applicationRouter = application.Router();
 

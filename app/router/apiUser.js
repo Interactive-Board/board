@@ -1,6 +1,6 @@
 const application = require('express');
 const applicationRouter = application.Router();
-const sqlConnectionPool = require('./db');
+const sqlConnectionPool = require('../db');
 
 applicationRouter.get("/:userID", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
