@@ -9,6 +9,7 @@
 <!--		<script src="news.js"></script>-->
 		<script src="header.js"></script>
 		<script src="/script/page/NewsPage.js" type="module"></script>
+		<script src="/script/component/Menu.js" type="module"></script>
 	</head>
 	<body>
 		<div class="header container flex-row">
@@ -30,13 +31,14 @@
 			</div>
 -->
 		</div>
-		<div class="menu">
-			<div class="menu-container">
-				<a href="/mockup/news"><div class="menu-button" style="background: #00e676">Student Success</div></a>
-				<a href="/mockup/news"><div class="menu-button" style="background: #f1c40f">Alumni Map</div></a>
-				<a href="/mockup/news"><div class="menu-button" style="background: #42a5f5">Directory</div></a>
-				<a href="/mockup/publications"><div class="menu-button" style="background: #e57373">Publications</div></a>
-			</div>
+		<menu-element></menu-element>
+<!--
+		<div class="menu container flex-row">
+			<a href="/mockup/news"><div class="item container flex-column"><div class="image-container container flow"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><style>.cls-1{fill:var(--menu-item-color);}</style></defs><title>default-menu-icon</title><path class="cls-1" d="M810.67,119.33a70.3,70.3,0,0,1,70,70V810.67a70.3,70.3,0,0,1-70,70H189.33a70.3,70.3,0,0,1-70-70V189.33a70.3,70.3,0,0,1,70-70H810.67m0-30H189.33c-55,0-100,45-100,100V810.67c0,55,45,100,100,100H810.67c55,0,100-45,100-100V189.33c0-55-45-100-100-100Z"/><path class="cls-1" d="M451.29,615.2V596q0-41.6,12.8-68.44t47.64-56.72q48.36-40.87,61-61.51t12.62-49.77q0-36.27-23.29-56t-67-19.74a227.93,227.93,0,0,0-54.75,6.58q-26.67,6.59-61.16,24l-21-48q67.2-35.2,140.45-35.2,67.91,0,105.6,33.42t37.69,94.22q0,26-6.94,45.69a134.34,134.34,0,0,1-20.44,37.34q-13.51,17.6-58.31,56.71-35.92,30.59-47.47,50.84t-11.55,54.05V615.2ZM433.87,720.8q0-48.34,42.66-48.36,20.63,0,31.83,12.45t11.2,35.91q0,22.76-11.38,35.38T476.53,768.8q-18.48,0-30.57-11.2T433.87,720.8Z"/></svg></div><div class="label">Directory</div></div></a>
+			<a href="/mockup/news"><div class="item container flex-column"><div class="image-container container flow"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><style>.cls-1{fill:var(--menu-item-color);}</style></defs><title>default-menu-icon</title><path class="cls-1" d="M810.67,119.33a70.3,70.3,0,0,1,70,70V810.67a70.3,70.3,0,0,1-70,70H189.33a70.3,70.3,0,0,1-70-70V189.33a70.3,70.3,0,0,1,70-70H810.67m0-30H189.33c-55,0-100,45-100,100V810.67c0,55,45,100,100,100H810.67c55,0,100-45,100-100V189.33c0-55-45-100-100-100Z"/><path class="cls-1" d="M451.29,615.2V596q0-41.6,12.8-68.44t47.64-56.72q48.36-40.87,61-61.51t12.62-49.77q0-36.27-23.29-56t-67-19.74a227.93,227.93,0,0,0-54.75,6.58q-26.67,6.59-61.16,24l-21-48q67.2-35.2,140.45-35.2,67.91,0,105.6,33.42t37.69,94.22q0,26-6.94,45.69a134.34,134.34,0,0,1-20.44,37.34q-13.51,17.6-58.31,56.71-35.92,30.59-47.47,50.84t-11.55,54.05V615.2ZM433.87,720.8q0-48.34,42.66-48.36,20.63,0,31.83,12.45t11.2,35.91q0,22.76-11.38,35.38T476.53,768.8q-18.48,0-30.57-11.2T433.87,720.8Z"/></svg></div><div class="label">Recognitions</div></div></a>
+			<a href="/mockup/news"><div class="item container flex-column"><div class="image-container container flow"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><style>.cls-1{fill:var(--menu-item-color);}</style></defs><title>default-menu-icon</title><path class="cls-1" d="M810.67,119.33a70.3,70.3,0,0,1,70,70V810.67a70.3,70.3,0,0,1-70,70H189.33a70.3,70.3,0,0,1-70-70V189.33a70.3,70.3,0,0,1,70-70H810.67m0-30H189.33c-55,0-100,45-100,100V810.67c0,55,45,100,100,100H810.67c55,0,100-45,100-100V189.33c0-55-45-100-100-100Z"/><path class="cls-1" d="M451.29,615.2V596q0-41.6,12.8-68.44t47.64-56.72q48.36-40.87,61-61.51t12.62-49.77q0-36.27-23.29-56t-67-19.74a227.93,227.93,0,0,0-54.75,6.58q-26.67,6.59-61.16,24l-21-48q67.2-35.2,140.45-35.2,67.91,0,105.6,33.42t37.69,94.22q0,26-6.94,45.69a134.34,134.34,0,0,1-20.44,37.34q-13.51,17.6-58.31,56.71-35.92,30.59-47.47,50.84t-11.55,54.05V615.2ZM433.87,720.8q0-48.34,42.66-48.36,20.63,0,31.83,12.45t11.2,35.91q0,22.76-11.38,35.38T476.53,768.8q-18.48,0-30.57-11.2T433.87,720.8Z"/></svg></div><div class="label">Alumni Map</div></div></a>
+			<a href="/mockup/publications"><div class="item container flex-column"><div class="image-container container flow"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><style>.cls-1{fill:var(--menu-item-color);}</style></defs><title>default-menu-icon</title><path class="cls-1" d="M810.67,119.33a70.3,70.3,0,0,1,70,70V810.67a70.3,70.3,0,0,1-70,70H189.33a70.3,70.3,0,0,1-70-70V189.33a70.3,70.3,0,0,1,70-70H810.67m0-30H189.33c-55,0-100,45-100,100V810.67c0,55,45,100,100,100H810.67c55,0,100-45,100-100V189.33c0-55-45-100-100-100Z"/><path class="cls-1" d="M451.29,615.2V596q0-41.6,12.8-68.44t47.64-56.72q48.36-40.87,61-61.51t12.62-49.77q0-36.27-23.29-56t-67-19.74a227.93,227.93,0,0,0-54.75,6.58q-26.67,6.59-61.16,24l-21-48q67.2-35.2,140.45-35.2,67.91,0,105.6,33.42t37.69,94.22q0,26-6.94,45.69a134.34,134.34,0,0,1-20.44,37.34q-13.51,17.6-58.31,56.71-35.92,30.59-47.47,50.84t-11.55,54.05V615.2ZM433.87,720.8q0-48.34,42.66-48.36,20.63,0,31.83,12.45t11.2,35.91q0,22.76-11.38,35.38T476.53,768.8q-18.48,0-30.57-11.2T433.87,720.8Z"/></svg></div><div class="label">Publications</div></div></a>
 		</div>
+-->
 	</body>
 </html>
