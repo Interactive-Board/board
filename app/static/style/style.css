@@ -1,3 +1,4 @@
+@import 'header.css';
 @import 'menu.css';
 
 :root {
@@ -42,42 +43,6 @@ hr {
 	border: none;
 	height: 1px;
 	background: #C3C3C3;
-}
-
-.header {
-	height: var(--header-height);
-	background: #2196F3;
-	font-size: 1.25em;
-}
-
-#weather {
-	position: fixed;
-	width: var(--header-height);
-	height: var(--header-height);
-	margin-left: 1.4vw;
-	overflow: hidden;
-}
-
-#weather img {
-	position: absolute;
-	display: block;
-	height: var(--header-height);
-	transition: top 1s;
-}
-
-#time {
-	color: #FFF;
-	text-align: center;
-/*	font-family: "Roboto Mono", Helvetica, "Times New Roman", monospace;*/
-	font: 500 1.25em "Roboto Mono";
-	line-height: var(--header-height);
-	overflow: hidden;
-}
-
-#time .seconds {
-	color: rgba(255, 255, 255, 0.75);
-	/* Calculate header font-size */
-	font-size: 0.645161290em;
 }
 
 .content {
