@@ -3,11 +3,8 @@
 
 :root {
 	--header-height: 8vh;
-	--scrollbar-size: 16px;
-	/* Temporarily hide scrollbar space */
-	--scrollbar-size: 0px;
+	
 	--menu-height: 12vh;
-	--content-height: calc(100vh - var(--menu-height) - var(--scrollbar-size));
 	--menu-item-width: 5.4rem;
 	--menu-label-height: 1.1rem;
 	--menu-item-default-color: #5D5D5D;
@@ -46,7 +43,6 @@ hr {
 }
 
 .content {
-/*	height: var(--content-height);*/
 	flex: 1;
 	display: flex;
 	overflow: auto;
