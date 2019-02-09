@@ -10,23 +10,25 @@
 		<script src="/script/component/Menu.js" type="module"></script>
 	</head>
 	<body>
-		<div class="header container flex-row">
-			<div id="weather"><img style="top: 0;" src="/image/weather/cloud.png"></div>
-			<div id="time" class="container flow"><span></span><span class="seconds"></span><span></span></div>
-		</div>
-		<div class="content">
-			<div class="container flow flex-column">
-				<h1>Directory</h1>
-				<div class="container flow flex-row">
-					
+		<div class="grid-content">
+			<div class="header">
+				<div id="weather"><img style="top: 0;" src="/image/weather/cloud.png"></div>
+				<div id="time" class="container flow"><span></span><span class="seconds"></span><span></span></div>
+			</div>
+			<div style="display: flex; grid-area: var(--page-area); overflow: auto;">
+				<div class="container flow flex-column">
+					<h1>Directory</h1>
+					<div class="container flow flex-row">
+
+					</div>
+				</div>
+				<div class="container" style="width: 25vw;">
+					<div style="background: #E2E2E2;">
+						<news-page></news-page>
+					</div>
 				</div>
 			</div>
-			<div class="container" style="width: 25vw;">
-				<div style="background: #E2E2E2;">
-					<news-page></news-page>
-				</div>
-			</div>
-		</div>
 		<menu-element></menu-element>
+		</div>
 	</body>
 </html>

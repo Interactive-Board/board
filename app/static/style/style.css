@@ -14,6 +14,7 @@
 	--menu-item-active-color: #2196f3;
 	
 	--divider-color: #B3B3B3;
+	--page-area: page-start / content-start / page-end / content-end;
 }
 
 html,
@@ -24,8 +25,6 @@ input {
 }
 
 body {
-	display: flex;
-	flex-direction: column;
 	width: 100vw;
 	height: 100vh;
 	margin: 0;
@@ -45,11 +44,12 @@ hr {
 	background: #C3C3C3;
 }
 
-.content {
-/*	height: var(--content-height);*/
-	flex: 1;
-	display: flex;
-	overflow: auto;
+.grid-content {
+	height: 100vh;
+	width: 100vw;
+	display: grid;
+	grid-template-rows: [header-start] var(--header-height) [header-end page-start] auto [page-end menu-start] var(--menu-height) [menu-end];
+	grid-template-columns: [content-start] auto [content-end];
 }
 
 .container {

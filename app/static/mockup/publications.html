@@ -10,48 +10,50 @@
 		<script src="/script/component/Menu.js" type="module"></script>
 	</head>
 	<body>
-		<div class="header container flex-row">
-			<div id="weather"><img style="top: 0;" src="/image/weather/cloud.png"></div>
-			<div id="time" class="container flow"><span></span><span class="seconds"></span><span></span></div>
-		</div>
-		<div class="content">
-			<div class="container flow flex-column">
-				<h1>Publications</h1>
-				<div class="container flow flex-row">
-					<div style="margin: auto 0; padding: 0 40px 0px 40px; display: inline-block">
-						<img src="https://via.placeholder.com/200x275/">
-						<a href="publication_details"><p>Cells: Basic Units of Life</p></a>
-						<p>John Doe, Jane Doe</p>
+		<div class="grid-content">
+			<div class="header">
+				<div id="weather"><img style="top: 0;" src="/image/weather/cloud.png"></div>
+				<div id="time" class="container flow"><span></span><span class="seconds"></span><span></span></div>
+			</div>
+			<div style="display: flex; grid-area: var(--page-area); overflow: auto;">
+				<div class="container flow flex-column">
+					<h1>Publications</h1>
+					<div class="container flow flex-row">
+						<div style="margin: auto 0; padding: 0 40px 0px 40px; display: inline-block">
+							<img src="https://via.placeholder.com/200x275/">
+							<a href="publication_details"><p>Cells: Basic Units of Life</p></a>
+							<p>John Doe, Jane Doe</p>
+						</div>
+						<div style="margin: auto 0; padding: 0 40px 0px 40px; display: inline-block">
+							<img src="https://via.placeholder.com/200x275/">
+							<a href="publication_details"><p>Cells: Basic Units of Life</p></a>
+							<p>John Doe, Jane Doe</p>
+						</div>
+						<div style="margin: auto 0; padding: 0 40px 0px 40px; display: inline-block">
+							<img src="https://via.placeholder.com/200x275/">
+							<a href="publication_details"><p>Cells: Basic Units of Life</p></a>
+							<p>John Doe, Jane Doe</p>
+						</div>
 					</div>
-					<div style="margin: auto 0; padding: 0 40px 0px 40px; display: inline-block">
-						<img src="https://via.placeholder.com/200x275/">
-						<a href="publication_details"><p>Cells: Basic Units of Life</p></a>
-						<p>John Doe, Jane Doe</p>
-					</div>
-					<div style="margin: auto 0; padding: 0 40px 0px 40px; display: inline-block">
-						<img src="https://via.placeholder.com/200x275/">
-						<a href="publication_details"><p>Cells: Basic Units of Life</p></a>
-						<p>John Doe, Jane Doe</p>
+				</div>
+	<!--			<div style="display: inline-block; padding: 10px 20px; background-color: lightgray; float: right; width: 500px; box-sizing: border-box;">-->
+				<div class="container" style="width: 25vw;">
+	<!--
+					<div style="background: #E2E2E2;">
+						<news-page></news-page>
+	-->
+					<div style="padding: 10px 20px; background: #E2E2E2;">
+						<h2>News/Upcoming Events</h2>
+						<hr>
+						<news-element title="November!" date="11/01/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+
+						<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
+
+						<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
 					</div>
 				</div>
 			</div>
-<!--			<div style="display: inline-block; padding: 10px 20px; background-color: lightgray; float: right; width: 500px; box-sizing: border-box;">-->
-			<div class="container" style="width: 25vw;">
-<!--
-				<div style="background: #E2E2E2;">
-					<news-page></news-page>
--->
-				<div style="padding: 10px 20px; background: #E2E2E2;">
-					<h2>News/Upcoming Events</h2>
-					<hr>
-					<news-element title="November!" date="11/01/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
-
-					<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
-
-					<news-element title="ACM Meeting" date="9/9/18" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></news-element>
-				</div>
-			</div>
+			<menu-element></menu-element>
 		</div>
-		<menu-element></menu-element>
 	</body>
 </html>

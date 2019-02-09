@@ -11,7 +11,7 @@ class Menu extends Container {
 		let style = document.createElement("style");
 		style.textContent = `
 :host {
-	height: var(--menu-height);
+	grid-area: menu-start / content-start / menu-end / content-end;
 	justify-content: center;
 	align-items: stretch;
 	border-top: 0.0625rem solid var(--divider-color);

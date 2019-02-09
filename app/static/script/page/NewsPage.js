@@ -26,6 +26,8 @@ class NewsPage extends HTMLElement {
 		style.textContent = `
 :host {
 	display: block;
+	grid-area: var(--page-area);
+	overflow: auto;
 }
 `;
 

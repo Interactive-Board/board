@@ -1,5 +1,5 @@
 .header {
-	height: var(--header-height);
+	grid-area: header-start / content-start / header-end / content-end;
 	background: #2196F3;
 	font-size: 1.25em;
 }
