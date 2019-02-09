@@ -3,7 +3,7 @@ To setup for production, use `npm install --production` or set NODE_ENV to `prod
 
 ## Configuration
 There are a few configuration files that are necessary for the app to run. A sample is provided for each file, named `sample.CONFIG_NAME.json`.
-Here are a list of configuration files.
+Here is a list of all of the configuration files.
 
 | Configuration File | Sample File | Required |
 | --- | --- | --- |
