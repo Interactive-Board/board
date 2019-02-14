@@ -14,7 +14,8 @@
 	--menu-item-active-color: #2196f3;
 	
 	--divider-color: #B3B3B3;
-	--page-area: page-start / content-start / page-end / content-end;
+	--content-area : content-start / left-edge / content-end / right-edge;
+	--page-area: content-start / page-start / content-end / page-end;
 }
 
 html,
@@ -48,8 +49,8 @@ hr {
 	height: 100vh;
 	width: 100vw;
 	display: grid;
-	grid-template-rows: [header-start] var(--header-height) [header-end page-start] auto [page-end menu-start] var(--menu-height) [menu-end];
-	grid-template-columns: [content-start] auto [content-end];
+	grid-template-rows: [header-start] var(--header-height) [header-end content-start] auto [content-end menu-start] var(--menu-height) [menu-end];
+	grid-template-columns: [left-edge page-start] auto [page-end news-start] 25vw [news-end right-edge];
 }
 
 .container {

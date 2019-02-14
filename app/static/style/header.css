@@ -1,5 +1,5 @@
 .header {
-	grid-area: header-start / content-start / header-end / content-end;
+	grid-area: header-start / left-edge / header-end / right-edge;
 	background: #2196F3;
 	font-size: 1.25em;
 }
