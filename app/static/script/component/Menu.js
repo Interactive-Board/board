@@ -6,7 +6,7 @@ class Menu extends Container {
 		// Always call super first in constructor
 		super();
 	}
-	
+
 	async connectedCallback() {
 		let style = document.createElement("style");
 		style.textContent = `
@@ -20,7 +20,7 @@ class Menu extends Container {
 
 .item {
 	--menu-item-color: var(--menu-item-default-color);
-	
+
 	display: flex;
 	flex-direction: column;
 	width: var(--menu-item-width);
@@ -55,10 +55,10 @@ svg {
 	line-height: var(--menu-label-height);
 }
 `;
-		
+
 		this.setAttribute("flex", "row");
 		this.appendChild(style);
-		
+
 		let entries = [
 			{display: "Home", icon: "default", path: {main: "/mockup/news", alt: []}},
 			{display: "Directory", icon: "directory", path: {main: "/mockup/directory", alt: []}},
@@ -66,10 +66,10 @@ svg {
 			{display: "Alumni Map", icon: "alumni-map", path: {main: "/mockup/alumni", alt: []}},
 			{display: "Publications", icon: "publications", path: {main: "/mockup/publications", alt: ["/mockup/publication_details"]}}
 		];
-		
+
 		let pathData = (/.*?:\/\/.*?(\/.*)/g).exec(location.href);
 		let currentPath = pathData[1];
-		
+
 		for (let i = 0; i < entries.length; i++) {
 			let entry = entries[i];
 			let item = document.createElement("div");
@@ -82,25 +82,21 @@ svg {
 			let iconContainer = document.createElement("div");
 			iconContainer.className = "icon";
 			_.get(`/image/menu/${entry.icon}.svg`).then(({responseText: data}) => {
-//			_.get(`/image/menu/${entry.icon}.svg`).then((shit) => {
 				console.log(data);
 				iconContainer.innerHTML = data;
 				this.update();
 			}).catch((error) => {
 				console.log(error)
 			});
-//			let svg = await _.get(`/image/menu/${entry.icon}.svg`);
-//			iconContainer.innerHTML = svg;
 			let label = document.createElement("div");
 			label.className = "label";
 			label.innerText = entry.display;
-			
+
 			item.appendChild(iconContainer);
 			item.appendChild(label);
 			this.appendChild(item);
 		}
-		
-		// events are attached to the wrong element! (fake element, not shadow element)
+
 		this.addEventListener("click", (event) => {
 			let menuIndex = event.path.indexOf(this);
 			// -1 is the document fragment, -2 is the item itself

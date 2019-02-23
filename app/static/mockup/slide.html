@@ -124,7 +124,7 @@
 					change(slides[slide]);
 				});
 				
-				_.getJSON("/api/news").then((data) => {
+				_.getJSON("/api/news").then(({responseText: data}) => {
 					slides = data.data;
 					// Start the timer
 					timer.className = "start";
