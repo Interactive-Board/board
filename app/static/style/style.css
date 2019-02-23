@@ -1,5 +1,6 @@
 @import 'header.css';
 @import 'menu.css';
+@import 'directory.css';
 
 :root {
 	--header-height: 8vh;
