@@ -7,7 +7,7 @@ const passport = require('passport');
 //Login route
 applicationRouter.get("/login", async (request, response, next) => {
 	response.setHeader("Content-Type", "text/plain");
-
+	response.send('test');
 	/*
 	if (check if request is malformed) {
 		let error = new Error("400 Bad Request");
@@ -36,7 +36,7 @@ applicationRouter.get('/google', passport.authenticate('google', {
 
 // Callback route
 applicationRouter.get('/google/redirect', passport.authenticate('google'), async (request, response) => {
-	response.send('callback');
+	response.redirect('/forms');
 });
 
 module.exports = applicationRouter;

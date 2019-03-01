@@ -18,6 +18,7 @@ const handlebars = require("handlebars");
 const qrcode = require("qrcode");
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
+const cookieSession = require('cookie-session');
 
 // Promisify qrcode.toDataURL
 const qrcodeToDataURL = (text, options) => {
@@ -51,8 +52,8 @@ passport.deserializeUser(async (id, done) => {
 		let result = (await sqlConnectionPool.query("CALL board.get_adminbyid (?)", [id]))[0][0];
 		if (result[0].AID > 0) {
 			let User = {
-				id = result[0].AID,
-				email = result[0].Email
+				id: result[0].AID,
+				email: result[0].Email
 			}
 			done(null, User);
 		}
@@ -61,11 +62,17 @@ passport.deserializeUser(async (id, done) => {
 	}
 });
 
-// Setup OAuth
+// Setup OAuth and cookies
 try {
 	let config = fs.readFileSync(Directory.CONFIG + "settings.json");
 	config = JSON.parse(config);
-	console.log('here');
+	
+	application.use(cookieSession({
+		// Cookie lasts a day
+		maxAge: 24 * 60 * 60 * 1000,
+		keys: [config.cookies.key]
+	}));
+
 	passport.use(
 		new GoogleStrategy({
 			// Options
@@ -81,8 +88,8 @@ try {
 			//If it returned an id for the email
 			if (result[0].DoesExist > 0) {
 				let User = {
-					id = result[0].DoesExist,
-					email = profile.emails[0].value
+					id: result[0].DoesExist,
+					email: profile.emails[0].value
 				}
 				done(null, User);
 			} else {
@@ -93,6 +100,10 @@ try {
 } catch (error) {
 	console.error('Error loading oauth settings. Be sure to incldue clientID and clientSecret')
 }
+
+// init passport
+application.use(passport.initialize());
+application.use(passport.session());
 
 
 // Add headers
@@ -129,12 +140,14 @@ var apiPublications = require(Directory.ROUTER + 'apiPublications');
 var apiNews = require(Directory.ROUTER + 'apiNews');
 var apiDirectory = require(Directory.ROUTER + 'apiDirectory');
 var apiAuth = require(Directory.ROUTER + 'authRoutes');
+var forms = require(Directory.ROUTER + 'forms');
 
 application.use('/api/user/', apiUser);
 application.use('/api/publications', apiPublications);
 application.use('/api/news', apiNews);
 application.use('/api/directory', apiDirectory);
 application.use('/auth/', apiAuth);
+application.use('/forms/', forms);
 
 // Catch 405 errors
 // Supported methods are in ALLOWED_METHODS
