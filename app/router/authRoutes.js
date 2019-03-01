@@ -2,37 +2,25 @@ const application = require('express');
 const applicationRouter = application.Router();
 const sqlConnectionPool = require('../db');
 const passport = require('passport');
+const path = require('path');
 
 
 //Login route
 applicationRouter.get("/login", async (request, response, next) => {
-	response.setHeader("Content-Type", "text/plain");
-	response.send('test');
-	/*
-	if (check if request is malformed) {
-		let error = new Error("400 Bad Request");
-		error.status = 400;
-		error._method = request.method;
-		error._originalPath = request.path;
-		
-		// Trigger the error handler chain
-		next(error);
-		
-		return;
-	}
-	*/
-
-	// Get data on specified user
-	//let data = getSomeData(request.params.userID);
-
-	// Report some data
-	//response.send(JSON.stringify(data));
+	response.setHeader("Content-Type", "text/html");
+	response.sendFile(path.resolve(__dirname + "/../static/mockup/") + "/login.html");
 });
 
 // Authenticate
 applicationRouter.get('/google', passport.authenticate('google', {
 	scope: ['profile', 'email']
-}));
+}), async (request, response) => {
+	if(!request.user) {
+		console.log('here');
+	} else {
+		console.log('here2');
+	}
+});
 
 // Callback route
 applicationRouter.get('/google/redirect', passport.authenticate('google'), async (request, response) => {

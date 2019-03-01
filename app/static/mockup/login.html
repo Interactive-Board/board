@@ -7,13 +7,21 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Mono:500" rel="stylesheet">
 	<link rel="stylesheet" href="/style/style.css">
 	<script src="/script/component/StatusBar.js" type="module"></script>
-	<script src="/script/page/NewsPage.js" type="module"></script>
-	<script src="/script/component/Menu.js" type="module"></script>
+	<style>
+		a.button {
+			-webkit-appearance: button;
+			-moz-appearance: button;
+			appearance: button;
+
+			text-decoration: none;
+			color: initial;
+		}
+	</style>
 </head>
 
 <body>
 	<status-bar></status-bar>
-	<button>Login</button>
+	<a href="/auth/google" class="button">Login with Google</a>
 </body>
 
 </html>

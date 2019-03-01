@@ -46,7 +46,6 @@ passport.serializeUser(async (user, done) => {
 	done(null, user.id);
 });
 
-// id = 
 passport.deserializeUser(async (id, done) => {
 	try {
 		let result = (await sqlConnectionPool.query("CALL board.get_adminbyid (?)", [id]))[0][0];
@@ -80,8 +79,6 @@ try {
 			clientSecret: config.oauth.clientSecret,
 			callbackURL: '/auth/google/redirect'
 		}, async (accessToken, refreshToken, profile, done) => {
-			// Callback
-			console.log(profile);
 
 			// Check if profile.emails[0].value exists in administratortbl (check_adminemail)
 			let result = (await sqlConnectionPool.query("CALL board.check_adminemail (?)", [profile.emails[0].value]))[0][0];
@@ -93,7 +90,7 @@ try {
 				}
 				done(null, User);
 			} else {
-				done('User not authorized');
+				done(null, null);
 			}
 		})
 	);
