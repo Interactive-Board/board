@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `administratortbl`
+--
+
+DROP TABLE IF EXISTS `administratortbl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `administratortbl` (
+  `AID` int(11) NOT NULL AUTO_INCREMENT,
+  `Email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`AID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Unlike the usertbl, the administratortbl is used to keep track of strictly just administrators. This is due to a change in the project model. Rather than having different sets of users with permissions to do and input certain things about themselves, the ecosystem will be much more contained and only admins can actually input information (thus, are automatically approved). Self reported information must happen through emailing an administrator';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `administratortbl`
+--
+
+LOCK TABLES `administratortbl` WRITE;
+/*!40000 ALTER TABLE `administratortbl` DISABLE KEYS */;
+INSERT INTO `administratortbl` VALUES (1,'jsn9@hawaii.edu');
+/*!40000 ALTER TABLE `administratortbl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `directorylocationandhourstbl`
 --
 
@@ -236,6 +260,44 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'board'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `check_adminemail` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `check_adminemail`(IN AdminEmail nvarchar(255))
+BEGIN
+SELECT IFNULL(SUM(AID), 0) DoesExist FROM board.administratortbl WHERE Email = AdminEmail;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `get_adminbyid` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_adminbyid`(IN id INT)
+BEGIN
+SELECT * FROM board.administratortbl WHERE AID = id;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_directory` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -445,4 +507,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-29 18:23:41
+-- Dump completed on 2019-02-28 15:47:13

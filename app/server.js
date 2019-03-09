@@ -16,6 +16,10 @@ const server = http.createServer(application);
 const fs = require("fs");
 const handlebars = require("handlebars");
 const qrcode = require("qrcode");
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20');
+const cookieSession = require('cookie-session');
+
 // Promisify qrcode.toDataURL
 const qrcodeToDataURL = (text, options) => {
 	return new Promise((resolve, reject) => {
@@ -36,6 +40,67 @@ const listenPort = process.env.PORT || 8090; // 3000;
 const listenAddress = "0.0.0.0";
 
 let sqlConnectionPool = require('./db');
+
+// user contains id and email fields
+passport.serializeUser(async (user, done) => {
+	done(null, user.id);
+});
+
+passport.deserializeUser(async (id, done) => {
+	try {
+		let result = (await sqlConnectionPool.query("CALL board.get_adminbyid (?)", [id]))[0][0];
+		if (result[0].AID > 0) {
+			let User = {
+				id: result[0].AID,
+				email: result[0].Email
+			}
+			done(null, User);
+		}
+	} catch (error) {
+		done(error);
+	}
+});
+
+// Setup OAuth and cookies
+try {
+	let config = fs.readFileSync(Directory.CONFIG + "settings.json");
+	config = JSON.parse(config);
+	
+	application.use(cookieSession({
+		// Cookie lasts a day
+		maxAge: 24 * 60 * 60 * 1000,
+		keys: [config.cookies.key]
+	}));
+
+	passport.use(
+		new GoogleStrategy({
+			// Options
+			clientID: config.oauth.clientID,
+			clientSecret: config.oauth.clientSecret,
+			callbackURL: '/auth/google/redirect'
+		}, async (accessToken, refreshToken, profile, done) => {
+
+			// Check if profile.emails[0].value exists in administratortbl (check_adminemail)
+			let result = (await sqlConnectionPool.query("CALL board.check_adminemail (?)", [profile.emails[0].value]))[0][0];
+			//If it returned an id for the email
+			if (result[0].DoesExist > 0) {
+				let User = {
+					id: result[0].DoesExist,
+					email: profile.emails[0].value
+				}
+				done(null, User);
+			} else {
+				done(null, null);
+			}
+		})
+	);
+} catch (error) {
+	console.error('Error loading oauth settings. Be sure to incldue clientID and clientSecret')
+}
+
+// init passport
+application.use(passport.initialize());
+application.use(passport.session());
 
 
 // Add headers
@@ -71,11 +136,15 @@ var apiUser = require(Directory.ROUTER + 'apiUser');
 var apiPublications = require(Directory.ROUTER + 'apiPublications');
 var apiNews = require(Directory.ROUTER + 'apiNews');
 var apiDirectory = require(Directory.ROUTER + 'apiDirectory');
+var apiAuth = require(Directory.ROUTER + 'authRoutes');
+var forms = require(Directory.ROUTER + 'forms');
 
 application.use('/api/user/', apiUser);
 application.use('/api/publications', apiPublications);
 application.use('/api/news', apiNews);
 application.use('/api/directory', apiDirectory);
+application.use('/auth/', apiAuth);
+application.use('/forms/', forms);
 
 // Catch 405 errors
 // Supported methods are in ALLOWED_METHODS
