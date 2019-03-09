@@ -16,30 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `administratortbl`
---
-
-DROP TABLE IF EXISTS `administratortbl`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `administratortbl` (
-  `AID` int(11) NOT NULL AUTO_INCREMENT,
-  `Email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  PRIMARY KEY (`AID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Unlike the usertbl, the administratortbl is used to keep track of strictly just administrators. This is due to a change in the project model. Rather than having different sets of users with permissions to do and input certain things about themselves, the ecosystem will be much more contained and only admins can actually input information (thus, are automatically approved). Self reported information must happen through emailing an administrator';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `administratortbl`
---
-
-LOCK TABLES `administratortbl` WRITE;
-/*!40000 ALTER TABLE `administratortbl` DISABLE KEYS */;
-INSERT INTO `administratortbl` VALUES (1,'jsn9@hawaii.edu');
-/*!40000 ALTER TABLE `administratortbl` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `directorylocationandhourstbl`
 --
 
@@ -104,10 +80,9 @@ DROP TABLE IF EXISTS `newstbl`;
 CREATE TABLE `newstbl` (
   `NID` bigint(15) unsigned NOT NULL AUTO_INCREMENT,
   `UID` bigint(15) unsigned NOT NULL,
-  `NewsTitle` varchar(50) NOT NULL,
+  `NewsTitle` varchar(30) NOT NULL,
   `NewsSubHeading` varchar(30) NOT NULL,
-  `NewsDescription` varchar(255) NOT NULL,
-  `NewsText` varchar(2000) NOT NULL COMMENT 'Actual news text',
+  `NewsDescription` varchar(275) NOT NULL,
   `NewsURL` varchar(255) DEFAULT NULL,
   `NewsImageReference` varchar(255) DEFAULT NULL COMMENT 'If this is NULL, must use ImageColor',
   `NewsBackgroundColor` varchar(16) DEFAULT 'FFFFFF' COMMENT 'Stored hex value',
@@ -124,7 +99,7 @@ CREATE TABLE `newstbl` (
 
 LOCK TABLES `newstbl` WRITE;
 /*!40000 ALTER TABLE `newstbl` DISABLE KEYS */;
-INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','08-20-18','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','This would be the full description of the news (limit 2000 characters)','www.google.com','imgur.com','FFFFFF',1),(2,2,'Fake Title','Fake Subheading','This is a bad description, should not display','Unaccepted','www.google.com/images','imgur.com','000000',0);
+INSERT INTO `newstbl` VALUES (1,1,'ACM Meeting','08-20-18','There\'s a meeting..... (displayed on Slide page, limit of 255 chars, to be increased)','www.google.com','imgur.com','FFFFFF',1),(2,2,'Fake Title','Fake Subheading','This is a bad description, should not display','www.google.com/images','imgur.com','000000',0);
 /*!40000 ALTER TABLE `newstbl` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +225,6 @@ SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `view_news` AS SELECT 
  1 AS `NewsTitle`,
  1 AS `NewsDescription`,
- 1 AS `NewsText`,
  1 AS `NewsURL`,
  1 AS `NewsImageReference`,
  1 AS `NewsBackgroundColor`,
@@ -260,68 +234,6 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'board'
 --
-/*!50003 DROP PROCEDURE IF EXISTS `check_adminemail` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `check_adminemail`(IN AdminEmail nvarchar(255))
-BEGIN
-SELECT IFNULL(SUM(AID), 0) DoesExist FROM board.administratortbl WHERE Email = AdminEmail;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_adminbyid` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_adminbyid`(IN id INT)
-BEGIN
-SELECT * FROM board.administratortbl WHERE AID = id;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_directory` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_directory`(IN MaxDID bigint(15))
-BEGIN
--- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
-IF MaxDID = -1 THEN
-	SELECT * FROM board.directorytbl ORDER BY DID DESC LIMIT 10;
-ELSEIF MaxDID > -1 THEN
-	SELECT * FROM board.directorytbl WHERE DID < MaxDID ORDER BY DID DESC LIMIT 10;
-END IF;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `get_news` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -364,66 +276,6 @@ IF MaxPubID = -1 THEN
 ELSEIF MaxPubID > -1 THEN
 	SELECT * FROM board.publicationstbl WHERE PubAcceptedIndicator = 1 AND PubID < MaxPubID ORDER BY PubID DESC LIMIT 10;
 END IF;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_single_directory` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_single_directory`(IN lookup_DID bigint(15))
-BEGIN
--- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
-SELECT * FROM board.directorytbl WHERE DID = lookup_DID;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_single_news` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_single_news`(IN lookup_NID bigint(15))
-BEGIN
--- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
-SELECT * FROM board.newstbl WHERE NID = lookup_NID AND NewsAcceptedIndicator = 1;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `get_single_publication` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_single_publication`(IN lookup_PubID bigint(15))
-BEGIN
--- If MaxNID is -1, it means we're just getting the first 10. With the limit, it means we are paginating based off the PubID
-SELECT * FROM board.publicationstbl WHERE PubID = lookup_PubID AND PubAcceptedIndicator = 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -490,10 +342,10 @@ DELIMITER ;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
 /*!50001 SET character_set_client      = utf8mb4 */;
 /*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_unicode_ci */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `view_news` AS select `newstbl`.`NewsTitle` AS `NewsTitle`,`newstbl`.`NewsDescription` AS `NewsDescription`,`newstbl`.`NewsText` AS `NewsText`,`newstbl`.`NewsURL` AS `NewsURL`,`newstbl`.`NewsImageReference` AS `NewsImageReference`,`newstbl`.`NewsBackgroundColor` AS `NewsBackgroundColor`,`newstbl`.`NewsAcceptedIndicator` AS `NewsAcceptedIndicator` from `newstbl` where (`newstbl`.`NewsAcceptedIndicator` = 1) */;
+/*!50001 VIEW `view_news` AS select `newstbl`.`NewsTitle` AS `NewsTitle`,`newstbl`.`NewsDescription` AS `NewsDescription`,`newstbl`.`NewsURL` AS `NewsURL`,`newstbl`.`NewsImageReference` AS `NewsImageReference`,`newstbl`.`NewsBackgroundColor` AS `NewsBackgroundColor`,`newstbl`.`NewsAcceptedIndicator` AS `NewsAcceptedIndicator` from `newstbl` where (`newstbl`.`NewsAcceptedIndicator` = 1) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -507,4 +359,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-28 15:47:13
+-- Dump completed on 2019-03-08 17:42:41
