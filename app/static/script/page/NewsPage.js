@@ -1,6 +1,7 @@
 import Container from "../component/Container.js";
 import Heading from "../component/Heading.js";
 import News from "../component/News.js";
+import $ from "jquery";
 
 class NewsPage extends HTMLElement {
 	constructor() {
@@ -17,17 +18,51 @@ class NewsPage extends HTMLElement {
 		wrapper.style.height = "100%";
 		wrapper.setAttribute("flow", "");
 		wrapper.setAttribute("flex", "column");
+
+		// // Jquery
+		// let wrapper = $(`
+		// 	<container-element style="height: 100%;">
+		// 	</container-element>
+		// `);
+		// wrapper.attr("flow", "");
+		// wrapper.attr("flex", "column");
+
 		let title = document.createElement("heading-element");
 		title.setAttribute("text", "News/Upcoming Events");
+
+		// // Jquery
+		// let title = $(`
+		// 	<heading-element>
+		// 		News/Upcoming Events
+		// 	</heading-element>
+		// `);
+
 		let hr = document.createElement("hr");
+
+		// // Jquery
+		// let hr = $('<hr></hr>');
+
 		let container = document.createElement("container-element");
+
+		// // Jquery
+		// let container = $(`<container-element></container-element>`);
+
 		this._containerElement = container;
 		let style = document.createElement("style");
 		style.textContent = `
-:host {
-	display: block;
-}
-`;
+			:host {
+				display: block;
+			}
+		`;
+
+		// // Jquery
+		// let style = $(`
+		// 	<style>
+		// 		:host {
+		// 			display: block;
+		// 		}
+		// 	</style>
+		// `);
 
 		wrapper.appendChild(title);
 		wrapper.appendChild(hr);
