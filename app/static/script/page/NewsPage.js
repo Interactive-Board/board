@@ -1,7 +1,6 @@
 import Container from "../component/Container.js";
 import Heading from "../component/Heading.js";
 import News from "../component/News.js";
-import $ from "jquery";
 
 class NewsPage extends HTMLElement {
 	constructor() {
@@ -13,65 +12,32 @@ class NewsPage extends HTMLElement {
 		// Create a shadow root
 		let shadow = this.attachShadow({mode: "open"});
 
-		// Create elements
-		let wrapper = document.createElement("container-element");
-		wrapper.style.height = "100%";
-		wrapper.setAttribute("flow", "");
-		wrapper.setAttribute("flex", "column");
+		// Jquery
+		let wrapper = $(`
+			<container-element flow flex=column style="height: 100%;">
+				<heading-element>
+					News/Upcoming Events
+				</heading-element>
+				<hr>
+			</container-element>
+		`);
 
-		// // Jquery
-		// let wrapper = $(`
-		// 	<container-element style="height: 100%;">
-		// 	</container-element>
-		// `);
-		// wrapper.attr("flow", "");
-		// wrapper.attr("flex", "column");
+		let container = $(`<container-element></container-element>`);
+		this._containerElement = container.get(0);
 
-		let title = document.createElement("heading-element");
-		title.setAttribute("text", "News/Upcoming Events");
+		let style = $(`
+			<style>
+				:host {
+					display: block;
+				}
+			</style>
+		`);
 
-		// // Jquery
-		// let title = $(`
-		// 	<heading-element>
-		// 		News/Upcoming Events
-		// 	</heading-element>
-		// `);
-
-		let hr = document.createElement("hr");
-
-		// // Jquery
-		// let hr = $('<hr></hr>');
-
-		let container = document.createElement("container-element");
-
-		// // Jquery
-		// let container = $(`<container-element></container-element>`);
-
-		this._containerElement = container;
-		let style = document.createElement("style");
-		style.textContent = `
-			:host {
-				display: block;
-			}
-		`;
-
-		// // Jquery
-		// let style = $(`
-		// 	<style>
-		// 		:host {
-		// 			display: block;
-		// 		}
-		// 	</style>
-		// `);
-
-		wrapper.appendChild(title);
-		wrapper.appendChild(hr);
-//		container.appendChild(style);
-		wrapper.appendChild(container);
+		wrapper.append(container);
 
 		// Attach the created elements to the shadow dom
-		shadow.appendChild(style);
-		shadow.appendChild(wrapper);
+		shadow.appendChild(style.get(0));
+		shadow.appendChild(wrapper.get(0));
 		
 		this.news = [
 			{

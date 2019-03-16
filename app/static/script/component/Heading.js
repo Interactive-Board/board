@@ -29,7 +29,7 @@ h6 {
 	text-align: center;
 }
 `;
-
+		
 		// Attach the created elements to the shadow dom
 		shadow.appendChild(style);
 		shadow.appendChild(wrapper);

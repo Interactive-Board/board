@@ -43,7 +43,7 @@ class StatusBar extends HTMLElement {
 		let seconds = document.createElement("span");
 		seconds.className = "seconds";
 		let period = document.createElement("span");
-		
+
 		// // Jquery
 		// let time = $(`
 		// 	<div class="time container flow">
