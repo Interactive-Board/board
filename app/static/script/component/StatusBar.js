@@ -19,9 +19,23 @@ class StatusBar extends HTMLElement {
 		let weather = document.createElement("div");
 		weather.className = "weather";
 		this._weatherElement = weather;
+
+		// // Jquery
+		// let weather = $(`
+		// 	<div class="weather">
+		// 	</div>
+		// `);
+
 		let image = document.createElement("img");
 		image.style.top = "0";
 		image.src = "/image/weather/cloud.png";
+
+		// // Jquery
+		// let image = $(`
+		// 	<img src="/image/weather/cloud.png" style="top: 0;">
+		// 	</img>
+		// `);
+
 		let time = document.createElement("div");
 		this._timeElement = time;
 		time.className = "time container flow";
@@ -29,6 +43,17 @@ class StatusBar extends HTMLElement {
 		let seconds = document.createElement("span");
 		seconds.className = "seconds";
 		let period = document.createElement("span");
+		
+		// // Jquery
+		// let time = $(`
+		// 	<div class="time container flow">
+		// 		<span></span>
+		// 		<span class="seconds"></span>
+		// 		<span></span>
+		// 	</div>`
+		// );
+		// this._timeElement = time;
+
 		let style = document.createElement("style");
 		style.textContent = `
 :host {
