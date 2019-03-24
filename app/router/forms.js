@@ -21,22 +21,28 @@ applicationRouter.get('/', checkAuth, async (request, response, next) => {
 //Posts
 applicationRouter.post('/formNews', checkAuth, async (request, response, next) => {
 	let postType = request.body.postType;
-	let userID = request.user.id;
-	let title = request.body.title;
-	let subheading = request.body.subheading;
-	let description = request.body.description;
-	let url = request.body.url;
-	let imagereference = request.body.imagereference;
-	let bgcolor = request.body.bgcolor;
-	let newsAccepted = 1; //Should always be 1 at this point since everything is manually inputted through the administrator
 
 	try {
-		if (postType.toUpperCase() == "INSERT") {
+		if(postType.toUpperCase() == 'DELETE') {
+			let newsid = request.body.newsid;
+			await sqlConnectionPool.query("CALL board.delete_news (?)", [newsid]);
+			response.send('completed');
+		}
+
+		let userID = request.user.id;
+		let title = request.body.title;
+		let subheading = request.body.subheading;
+		let description = request.body.description;
+		let url = request.body.url;
+		let imagereference = request.body.imagereference;
+		let bgcolor = request.body.bgcolor;
+		let newsAccepted = 1; //Should always be 1 at this point since everything is manually inputted through the administrator
+		if (postType.toUpperCase() == 'INSERT') {
 			await sqlConnectionPool.query("CALL board.insert_news (?,?,?,?,?,?,?,?)", [userID, title, subheading, description, url, imagereference, bgcolor, newsAccepted]);
 			response.send('completed');
-		} else if (postType.toUpperCase() == "UPDATE") {
+		} else if (postType.toUpperCase() == 'UPDATE') {
 			let newsid = request.body.newsid;
-			await sqlConnectionPool.query("CALL board.insert_news (?,?,?,?,?,?,?,?,?)", [newsid, userID, title, subheading, description, url, imagereference, bgcolor, newsAccepted]);
+			await sqlConnectionPool.query("CALL board.update_news (?,?,?,?,?,?,?,?,?)", [newsid, userID, title, subheading, description, url, imagereference, bgcolor, newsAccepted]);
 			response.send('completed');
 		}
 		return;
