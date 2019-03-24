@@ -288,15 +288,15 @@ DELIMITER ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_news`(IN in_UID bigint(15), 
-IN in_NewsTitle varchar(50), 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_news`(
+IN in_UID bigint(15), 
+IN in_NewsTitle varchar(30), 
 IN in_NewsSubHeading varchar(30), 
-IN in_NewsDescription varchar(255),
-IN in_NewsText varchar(2000),
+IN in_NewsDescription varchar(275),
 IN in_NewsURL varchar(255),
 IN in_NewsImageReference varchar(255),
 IN in_NewsBackgroundColor varchar(16),
@@ -308,7 +308,6 @@ BEGIN
         NewsTitle,
         NewsSubHeading,
         NewsDescription,
-        NewsText,
         NewsURL,
         NewsImageReference,
         NewsBackgroundColor,
@@ -317,8 +316,57 @@ BEGIN
 	VALUES (in_UID, 
     in_NewsTitle, 
     in_NewsSubHeading, 
-    in_NewsDescription, 
-    in_NewsText, 
+    in_NewsDescription,
+    in_NewsURL, 
+    in_NewsImageReference, 
+    in_NewsBackgroundColor, 
+    in_NewsAcceptedIndicator);
+    
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_news` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_news`(
+IN in_NID bigint(15),
+IN in_UID bigint(15), 
+IN in_NewsTitle varchar(30), 
+IN in_NewsSubHeading varchar(30), 
+IN in_NewsDescription varchar(275),
+IN in_NewsURL varchar(255),
+IN in_NewsImageReference varchar(255),
+IN in_NewsBackgroundColor varchar(16),
+IN in_NewsAcceptedIndicator tinyint(4))
+BEGIN
+	
+    DELETE FROM board.newstbl WHERE NID = in_NID;
+    
+    INSERT INTO board.newstbl (
+		UID,
+        NewsTitle,
+        NewsSubHeading,
+        NewsDescription,
+        NewsURL,
+        NewsImageReference,
+        NewsBackgroundColor,
+        NewsAcceptedIndicator
+    )
+	VALUES (in_UID, 
+    in_NewsTitle, 
+    in_NewsSubHeading, 
+    in_NewsDescription,
     in_NewsURL, 
     in_NewsImageReference, 
     in_NewsBackgroundColor, 
@@ -359,4 +407,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-08 17:42:41
+-- Dump completed on 2019-03-24  1:34:48
