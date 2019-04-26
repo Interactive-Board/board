@@ -8,13 +8,56 @@
 		<script src="/script/component/StatusBar.js" type="module"></script>
 		<script src="/script/page/NewsPage.js" type="module"></script>
 		<script src="/script/component/Menu.js" type="module"></script>
+
+		<script type="module">
+			import _ from "/script/lib.js";
+
+			/*
+			{
+				"success": true,
+				"data": [
+					{
+						"PubID":2,
+						"UID":2,
+						"PubTitle":"My Other Pulication",
+						"PubAuthors":"Joshua Nishiguchi",
+						"PubImageReference":"somedefaultimage.jpg",
+						"PubURL":"http://www.google.com"
+					}
+				]
+			}
+			 */
+			_.getJSON("/api/publications/").then(({response: data}) => {
+				let publications = data.data;
+
+				for (let i = 0; i < publications.length; i++) {
+					let container = document.createElement("div");
+					container.style.margin = "auto 0";
+					container.style.padding = "0 40px 0px 40px";
+					container.style.display = "inline-block";
+					let image = document.createElement("img");
+					image.src = publications[i].PubImageReference;
+					let anchor = document.createElement("a");
+					anchor.href = publications[i].PubURL;
+					let paragraph = document.createElement("p");
+					paragraph.innerText = publications[i].PubAuthors;
+					let anchorParagraph = document.createElement("p");
+					anchorParagraph.innerText = publications[i].PubTitle;
+					container.appendChild(image);
+					container.appendChild(anchor);
+					container.appendChild(paragraph);
+					anchor.appendChild(anchorParagraph);
+					document.getElementbyId("publications").appendChild(container);
+				}
+			});
+		</script>
 	</head>
 	<body>
 		<status-bar></status-bar>
 		<div class="content">
 			<div class="container flow flex-column">
 				<h1>Publications</h1>
-				<div class="container flow flex-row">
+				<div id="publications" class="container flow flex-row">
 					<div style="margin: auto 0; padding: 0 40px 0px 40px; display: inline-block">
 						<img src="https://via.placeholder.com/200x275/">
 						<a href="publication_details"><p>Cells: Basic Units of Life</p></a>
