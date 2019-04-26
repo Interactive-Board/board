@@ -6,7 +6,7 @@ let _ = {};
 			let request = new XMLHttpRequest();
 
 			request.addEventListener("load", (event) => {
-				resolve({responseText: request.responseText, request: request});
+				resolve({response: request.responseText, request: request});
 			});
 			request.addEventListener("error", (event) => {
 				reject({event: event, request: request});
@@ -23,8 +23,8 @@ let _ = {};
 	};
 	
 	_.getJSON = (url) => {
-		return _.get(url).then((response, request) => {
-			return JSON.parse(response);
+		return _.get(url).then(({response, request}) => {
+			return {response: JSON.parse(response), request: request};
 		});
 	};
 })();

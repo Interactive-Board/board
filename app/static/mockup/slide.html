@@ -76,7 +76,7 @@
 					}
 					let description = document.createElement("div");
 					description.className = "description";
-					description.innerText = slide.NewsDescription;
+					description.innerText = slide.NewsText;
 					
 					slideElement.appendChild(h1);
 					slideElement.appendChild(h2);
@@ -124,7 +124,7 @@
 					change(slides[slide]);
 				});
 				
-				_.getJSON("/api/news").then(({responseText: data}) => {
+				_.getJSON("/api/news").then(({response: data}) => {
 					slides = data.data;
 					// Start the timer
 					timer.className = "start";

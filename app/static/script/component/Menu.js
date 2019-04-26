@@ -81,7 +81,7 @@ svg {
 			item.dataset.entry = i;
 			let iconContainer = document.createElement("div");
 			iconContainer.className = "icon";
-			_.get(`/image/menu/${entry.icon}.svg`).then(({responseText: data}) => {
+			_.get(`/image/menu/${entry.icon}.svg`).then(({response: data}) => {
 				console.log(data);
 				iconContainer.innerHTML = data;
 				this.update();
