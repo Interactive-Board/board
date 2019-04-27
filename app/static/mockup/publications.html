@@ -29,7 +29,7 @@
 			 */
 			_.getJSON("/api/publications/").then(({response: data}) => {
 				let publications = data.data;
-
+				console.log(publications);
 				for (let i = 0; i < publications.length; i++) {
 					let container = document.createElement("div");
 					container.style.margin = "auto 0";
@@ -47,7 +47,7 @@
 					container.appendChild(anchor);
 					container.appendChild(paragraph);
 					anchor.appendChild(anchorParagraph);
-					document.getElementbyId("publications").appendChild(container);
+					document.getElementById("publications").appendChild(container);
 				}
 			});
 		</script>
